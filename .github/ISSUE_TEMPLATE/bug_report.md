@@ -1,8 +1,8 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
-labels: ''
+title: "[BUG]"
+labels: bug
 assignees: ''
 
 ---
@@ -23,16 +23,7 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
-
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
-
-**Additional context**
-Add any other context about the problem here.
+**Severity**
+P1 - Priority 1: This is a game breaking / crash-causing bug. Fixing these is non-negotiable
+P2 - Priority 2: This can cause systems in the game to break down and make the game un-fun to play. Fixing these is also important
+P3 - Priority 3: Edge case or rare occurrence that can interfere with the gameplay experience. Assess the urgency in fixing these.
