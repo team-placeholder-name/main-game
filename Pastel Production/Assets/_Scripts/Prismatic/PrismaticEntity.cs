@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Player
+namespace Prismatic
 {
     [System.Serializable]
-    public struct Entity
+    public struct PrismaticEntity
     {
         public Vector3 Position;
-
-        //Compose Color
+        public Quaternion Rotation;
+        public HueMix HueMix;
     }
 }

@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace Player
+namespace Prismatic
 {
-    public class Move : MonoBehaviour
+
+    public class PrismaticEntityPresentation : MonoBehaviour
     {
+        [SerializeField]
+        private PrismaticEntitySimulation simulationTarget;
         // Start is called before the first frame update
         void Start()
         {
