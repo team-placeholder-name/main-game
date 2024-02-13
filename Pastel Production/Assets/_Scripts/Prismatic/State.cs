@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Prismatic
 {
 
-    public abstract class Behaviour
+    public abstract class State
     {
         protected PrismaticEntitySimulation entityController;
 

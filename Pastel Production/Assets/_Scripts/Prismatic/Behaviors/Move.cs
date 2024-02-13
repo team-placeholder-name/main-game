@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Prismatic
 {
     [System.Serializable]
-    public class Move : Behaviour
+    public class Move : State
     {
         public override void Enter()
         {

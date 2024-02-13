@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Prismatic
 {
 
-    public class PrismaticEntityPresentation : MonoBehaviour
+    public class EntityPresentation : MonoBehaviour
     {
         [SerializeField]
         private PrismaticEntitySimulation simulationTarget;

@@ -7,7 +7,7 @@ namespace Prismatic
     [System.Serializable]
     public class HueMix
     {
-        [SerializeField]
-        Color color;
+
+        public Color color;
     }
 }

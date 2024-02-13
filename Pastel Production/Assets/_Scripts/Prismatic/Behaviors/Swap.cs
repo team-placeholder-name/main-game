@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Prismatic
 {
     [System.Serializable]
-    public class Swap : Behaviour
+    public class Swap : State
     {
         [SerializeField]
         int test;

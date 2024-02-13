@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Prismatic
 {
     [System.Serializable]
-    public class Refract : Behaviour
+    public class Refract : State
     {
         public override void Enter()
         {

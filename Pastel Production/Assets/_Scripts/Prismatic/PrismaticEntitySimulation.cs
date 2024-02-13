@@ -1,48 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace Prismatic
 {
     public class PrismaticEntitySimulation : MonoBehaviour
     {
+        public ReadOnlyCollection<PrismaticEntity> Entities { get => entities.AsReadOnly(); }
+        public Move Move { get => move; }
+        public Swap Swap { get => swap; }
+        public Refract Refract { get => refract; }
+        public Project Project { get => project; }
+        public State CurrentState { get => currentState; }
+
+
+
+
         [SerializeField]
         private List<PrismaticEntity> entities;
-
         [SerializeField]
         private Move move;
         [SerializeField]
         private Swap swap;
-        [SerializeField] 
+        [SerializeField]
         private Refract refract;
-        [SerializeField] 
+        [SerializeField]
         private Project project;
 
-        public Move Move { get { return move; } }
-        public Swap Swap { get { return swap; } }
-        public Refract Refract { get { return refract; } }
-        public Project Project { get { return project; } }
+        private State currentState;// the current behaviour acts on the list of entities. This list contains all the necessary data for the state.
 
-        private Behaviour currentBehaviour;// the current behaviour acts on the list of entities. This list contains all the necessary data for the state.
-        public Behaviour CurrentBehaviour { get { return currentBehaviour; } }
+
+
+
         
         
         private void Awake()
         {
-            currentBehaviour = Move;
+            currentState = Move;
         }
 
-        public void Transition(Behaviour nextBehaviour)
+        public void Transition(State nextBehaviour)
         {
-            currentBehaviour.Exit();
-            currentBehaviour = nextBehaviour;
-            currentBehaviour.Enter();
+            currentState.Exit();
+            currentState = nextBehaviour;
+            currentState.Enter();
         }
 
         //TODO: Add Input Types to simulation and entity strategies
+
+        
         private void Update()
         {
-            currentBehaviour.Update(entities);
+            //currentState.Update(entities);
         }
 
     }
