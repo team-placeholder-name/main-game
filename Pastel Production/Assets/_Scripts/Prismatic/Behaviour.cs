@@ -9,8 +9,11 @@ namespace Prismatic
     {
         protected PrismaticEntitySimulation entityController;
 
+        public abstract void Exit();
+
+        public abstract void Enter();
 
         public abstract void Update(List<PrismaticEntity> entities);
-        
+
     }
 }
