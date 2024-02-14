@@ -11,7 +11,7 @@ namespace Prismatic
         private void OnDrawGizmos()
         {
 
-            foreach (PrismaticEntity entity in simulationTarget.Entities)
+            foreach (PrismaticEntity entity in simulationTarget.SimulationData.Entities)
             {
                 Gizmos.color = entity.HueMix.color;
                 float radius = 0.5f;

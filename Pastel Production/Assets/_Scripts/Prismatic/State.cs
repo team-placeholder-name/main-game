@@ -9,11 +9,11 @@ namespace Prismatic
     {
         protected PrismaticEntitySimulation entityController;
 
-        public abstract void Exit();
+        public abstract void Exit(SimulationData data);
 
-        public abstract void Enter();
+        public abstract void Enter(SimulationData data);
 
-        public abstract void Update(List<PrismaticEntity> entities);
+        public abstract void Update(SimulationData data);
 
         public abstract void MoveInput(Vector2 movementInput);
 

@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Prismatic
 {
     public class PrismaticEntitySimulation : MonoBehaviour
     {
-        public ReadOnlyCollection<PrismaticEntity> Entities { get => entities.AsReadOnly(); }
+
+        //Hacky workaround to utilize serialize properties
+        public ReadOnlySimulationData SimulationData { get => simulationData.readOnlyData; }
         public Move Move { get => move; }
         public Swap Swap { get => swap; }
         public Refract Refract { get => refract; }
@@ -15,7 +18,8 @@ namespace Prismatic
         public State CurrentState { get => currentState; }
 
         [SerializeField]
-        private List<PrismaticEntity> entities;
+        private SimulationData simulationData;
+
         [SerializeField]
         private Move move;
         [SerializeField]
@@ -34,16 +38,17 @@ namespace Prismatic
 
         public void Transition(State nextBehaviour)
         {
-            currentState.Exit();
+            currentState.Exit(simulationData);
             currentState = nextBehaviour;
-            currentState.Enter();
+            currentState.Enter(simulationData);
         }
+
 
         //TODO: Add Input Types to simulation and entity strategies
         
         private void Update()
         {
-            //currentState.Update(entities);
+            currentState.Update(simulationData);
         }
 
         public void MoveInput(Vector2 movementInput)
@@ -51,4 +56,38 @@ namespace Prismatic
             currentState.MoveInput(movementInput);
         }
     }
+
+
+
+    //This class is used to store the data that is shared between states. Use as sparingly as possible
+    [System.Serializable]
+    public class SimulationData
+    {
+        public SimulationData()
+        {
+            readOnlyData = new ReadOnlySimulationData(this);
+        }
+        public readonly ReadOnlySimulationData readOnlyData;
+        [SerializeField]
+        public List<PrismaticEntity> entities;
+        [SerializeField]
+        public int currentEntityIndex;
+        
+    }
+
+
+    //If any shared state data needs to be read outside of the state, expose it here
+    public class ReadOnlySimulationData
+    {
+        public ReadOnlySimulationData(SimulationData data)
+        {
+            this.data = data;
+        }
+
+        private SimulationData data;
+        public ReadOnlyCollection<PrismaticEntity> Entities { get => data.entities.AsReadOnly(); }
+        public int currentIndex { get => data.currentEntityIndex; }
+    }
+
+    
 } 
