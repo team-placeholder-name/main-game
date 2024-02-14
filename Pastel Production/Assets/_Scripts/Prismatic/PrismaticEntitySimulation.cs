@@ -14,9 +14,6 @@ namespace Prismatic
         public Project Project { get => project; }
         public State CurrentState { get => currentState; }
 
-
-
-
         [SerializeField]
         private List<PrismaticEntity> entities;
         [SerializeField]
@@ -30,11 +27,11 @@ namespace Prismatic
 
         private State currentState;// the current behaviour acts on the list of entities. This list contains all the necessary data for the state.
 
+        /// <summary>
+        /// Updated by PlayerPrismaticEntityInput's OnMove()
+        /// </summary>
+        public Vector2 PlanarMovementInput { get; set; }
 
-
-
-        
-        
         private void Awake()
         {
             currentState = Move;
@@ -48,7 +45,6 @@ namespace Prismatic
         }
 
         //TODO: Add Input Types to simulation and entity strategies
-
         
         private void Update()
         {
