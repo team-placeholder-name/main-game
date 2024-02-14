@@ -27,11 +27,6 @@ namespace Prismatic
 
         private State currentState;// the current behaviour acts on the list of entities. This list contains all the necessary data for the state.
 
-        /// <summary>
-        /// Updated by PlayerPrismaticEntityInput's OnMove()
-        /// </summary>
-        public Vector2 PlanarMovementInput { get; set; }
-
         private void Awake()
         {
             currentState = Move;
@@ -51,5 +46,9 @@ namespace Prismatic
             //currentState.Update(entities);
         }
 
+        public void MoveInput(Vector2 movementInput)
+        {
+            currentState.MoveInput(movementInput);
+        }
     }
 } 

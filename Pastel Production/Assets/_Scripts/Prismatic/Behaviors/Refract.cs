@@ -20,5 +20,9 @@ namespace Prismatic
         {
             throw new System.NotImplementedException();
         }
+        public override void MoveInput(Vector2 movementInput)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

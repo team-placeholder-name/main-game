@@ -15,5 +15,7 @@ namespace Prismatic
 
         public abstract void Update(List<PrismaticEntity> entities);
 
+        public abstract void MoveInput(Vector2 movementInput);
+
     }
 }

@@ -26,6 +26,6 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
     /// <param name="value"></param>
     private void OnMove(InputValue value)
     {
-        controlledSimulation.PlanarMovementInput = value.Get<Vector2>();
+        controlledSimulation.MoveInput(value.Get<Vector2>());
     }
 }
