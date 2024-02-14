@@ -15,7 +15,7 @@ namespace Prismatic
         public Swap Swap { get => swap; }
         public Refract Refract { get => refract; }
         public Project Project { get => project; }
-        public State CurrentState { get => currentState; }
+        public StateType CurrentState { get => currentStateType; }
 
         [SerializeField]
         private SimulationData simulationData;
@@ -29,15 +29,14 @@ namespace Prismatic
         [SerializeField]
         private Project project;
 
-        private State currentState;// the current behaviour acts on the list of entities. This list contains all the necessary data for the state.
+
         [SerializeField]
         private StateType currentStateType;
 
         public enum StateType { Move, Swap, Refract, Project }
         private void Awake()
         {
-            
-            currentState = GetState(currentStateType);
+            Transition(currentStateType);
         }
 
         public State GetState(StateType stateType)
@@ -70,12 +69,12 @@ namespace Prismatic
         
         private void Update()
         {
-            currentState.Update(simulationData);
+            GetState(currentStateType).Update(simulationData);
         }
 
         public void MoveInput(Vector2 movementInput)
         {
-            currentState.MoveInput(movementInput);
+            GetState(currentStateType).MoveInput(movementInput);
         }
     }
 

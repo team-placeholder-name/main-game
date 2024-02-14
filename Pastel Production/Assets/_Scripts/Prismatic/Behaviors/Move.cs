@@ -13,12 +13,12 @@ namespace Prismatic
 
         public override void Enter(SimulationData data)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
         public override void Exit(SimulationData data)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
         public override void Update(SimulationData data)
