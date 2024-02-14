@@ -10,17 +10,17 @@ namespace Prismatic
         [SerializeField]
         int test;
 
-        public override void Enter()
+        public override void Enter(SimulationData data)
         {
             throw new System.NotImplementedException();
         }
 
-        public override void Exit()
+        public override void Exit(SimulationData data)
         {
             throw new System.NotImplementedException();
         }
 
-        public override void Update(List<PrismaticEntity> entities)
+        public override void Update(SimulationData data)
         {
             throw new System.NotImplementedException();
         }
