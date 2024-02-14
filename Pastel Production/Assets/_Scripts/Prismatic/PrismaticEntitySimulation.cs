@@ -30,17 +30,39 @@ namespace Prismatic
         private Project project;
 
         private State currentState;// the current behaviour acts on the list of entities. This list contains all the necessary data for the state.
+        [SerializeField]
+        private StateType currentStateType;
 
+        public enum StateType { Move, Swap, Refract, Project }
         private void Awake()
         {
-            currentState = Move;
+            
+            currentState = GetState(currentStateType);
         }
 
-        public void Transition(State nextBehaviour)
+        public State GetState(StateType stateType)
         {
-            currentState.Exit(simulationData);
-            currentState = nextBehaviour;
-            currentState.Enter(simulationData);
+            switch (stateType)
+            {
+                case StateType.Move:
+                    return move;
+                case StateType.Swap:
+                    return swap;
+                case StateType.Refract:
+                    return refract;
+                case StateType.Project:
+                    return project;
+                default:
+                    return null;
+            }
+        }
+
+        //Intended to be called only by the current state
+        public void Transition(StateType nextState)
+        {
+            GetState(currentStateType).Exit(simulationData);
+            currentStateType = nextState;
+            GetState(currentStateType).Enter(simulationData);
         }
 
 
