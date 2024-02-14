@@ -5,10 +5,10 @@ using UnityEngine;
 namespace Prismatic
 {
     [System.Serializable]
-    public struct PrismaticEntity
+    public class PrismaticEntity
     {
-        public Vector3 Position; // The position represents the root/base of the character
-        public Quaternion Rotation;
+        public Vector3 Position = Vector3.zero; // The position represents the root/base of the character
+        public Quaternion Rotation = Quaternion.identity;
         public HueMix HueMix;
     }
 }
