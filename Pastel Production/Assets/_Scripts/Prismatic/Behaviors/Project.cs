@@ -25,5 +25,9 @@ namespace Prismatic
         {
             throw new System.NotImplementedException();
         }
+        public override void MoveMouse(Vector2 mousePos)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
