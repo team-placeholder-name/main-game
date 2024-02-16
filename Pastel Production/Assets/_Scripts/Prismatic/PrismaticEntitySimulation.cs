@@ -76,6 +76,11 @@ namespace Prismatic
         {
             GetState(currentStateType).MoveInput(movementInput);
         }
+
+        public void MouseMove(Vector2 movementInput)
+        {
+            GetState(currentStateType).MoveMouse(movementInput);
+        }
     }
 
 
@@ -93,7 +98,7 @@ namespace Prismatic
         public List<PrismaticEntity> entities;
         [SerializeField]
         public int currentEntityIndex;
-        
+        public CameraData cameraData;
     }
 
 
