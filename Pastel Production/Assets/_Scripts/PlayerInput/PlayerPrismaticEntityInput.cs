@@ -28,4 +28,22 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
     {
         controlledSimulation.MoveInput(value.Get<Vector2>());
     }
+
+    /// <summary>
+    /// Called with Unity's Send Message system from Player Input
+    /// </summary>
+    /// <param name="value"></param>
+    private void OnFire(InputValue value)
+    {
+
+    }
+
+    /// <summary>
+    /// Called with Unity's Send Message system from Player Input
+    /// </summary>
+    /// <param name="value"></param>
+    private void OnLook(InputValue value)
+    {
+        controlledSimulation.MouseMove(value.Get<Vector2>());
+    }
 }
