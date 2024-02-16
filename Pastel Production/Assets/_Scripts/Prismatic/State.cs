@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal.Internal;
 
 namespace Prismatic
 {
 
     public abstract class State
     {
-        protected PrismaticEntitySimulation entityController;
 
         public abstract void Exit(SimulationData data);
 
