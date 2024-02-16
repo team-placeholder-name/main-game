@@ -30,6 +30,11 @@ namespace Prismatic
         {
             this.movementInput = movementInput;
         }
+
+        public override void MoveMouse(Vector2 mousePos)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
 }
