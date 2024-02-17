@@ -85,7 +85,7 @@ namespace Prismatic
 
 
 
-    //This class is used to store the data that is shared between states. Use as sparingly as possible
+    //Stores the data that is shared between states. Use as sparingly as possible
     [System.Serializable]
     public class SimulationData
     {
@@ -98,6 +98,10 @@ namespace Prismatic
         public List<PrismaticEntity> entities;
         [SerializeField]
         public int currentEntityIndex;
+        // Where does the player view originate from? this may be redundent because we have info about the current entity
+        public Vector3 ViewPosition;
+        // What is the player looking at. Aiming is essetnial for selecting targets, so this info must be preserved in the presntation
+        public Vector3 ViewTarget;
         public CameraData cameraData;
     }
 
@@ -113,6 +117,8 @@ namespace Prismatic
         private SimulationData data;
         public ReadOnlyCollection<PrismaticEntity> Entities { get => data.entities.AsReadOnly(); }
         public int currentIndex { get => data.currentEntityIndex; }
+        public Vector3 ViewPosition { get => data.ViewPosition; }
+        public Vector3 ViewTarget { get => data.ViewTarget; }
     }
 
     

@@ -4,21 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+/// <summary>
+/// Recieves messages from player input component, transforms the data if necessary, and then passes it to the controlled simulation
+/// </summary>
 public class PlayerPrismaticEntityInput : MonoBehaviour
 {
     [SerializeField]
     private PrismaticEntitySimulation controlledSimulation;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     /// <summary>
     /// Called with Unity's Send Message system from Player Input
