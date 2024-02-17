@@ -13,7 +13,7 @@ namespace Prismatic
 
             foreach (PrismaticEntity entity in simulationTarget.SimulationData.Entities)
             {
-                Gizmos.color = entity.HueMix.color;
+                Gizmos.color = entity.HueMix.Color;
                 float radius = 0.5f;
                 Gizmos.DrawSphere(entity.Position + Vector3.up * radius, radius);//place the sphere on top of the position
             }
