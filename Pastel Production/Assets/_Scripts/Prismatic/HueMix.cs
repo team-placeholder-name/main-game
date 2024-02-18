@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using Scrtwpns.Mixbox;
 using Unity.VisualScripting;
+using System.Linq;
 
 namespace Prismatic
 {
@@ -15,12 +16,18 @@ namespace Prismatic
         [SerializeField]
         private List<int> weights = new List<int>();
 
-        private int numMixedColors = 1;
-
         /// <summary>
         /// The approximated mix of all input colors.
         /// </summary>
-        public Color Color { get; private set; } = Color.red;
+        public Color Color { get; private set; } = Color.white;
+
+        public HueMix(List<Color> colors, List<int> weights)
+        {
+            this.colors = colors;
+            this.weights = weights;
+            
+            Mix();
+        }
 
         // Equality overrides
         public override bool Equals(object other) => this.Equals(other as HueMix);
@@ -58,8 +65,6 @@ namespace Prismatic
                 weights.Add(1);
             }
 
-            numMixedColors++;
-
             Mix();
         }
 
@@ -81,8 +86,6 @@ namespace Prismatic
                 weights[colors.IndexOf(color)]--;
             }
 
-            numMixedColors--;
-
             Mix();
         }
 
@@ -91,7 +94,7 @@ namespace Prismatic
         /// </summary>
         private void Mix()
         {
-            if(numMixedColors == 0)
+            if(weights.Sum() == 0)
             {
                 Color = Color.white;
                 return;
@@ -100,7 +103,7 @@ namespace Prismatic
             MixboxLatent latentMix = new MixboxLatent();
             for(int i = 0; i < colors.Count; i++)
             {
-                float concentration = weights[i] / (float)numMixedColors;
+                float concentration = weights[i] / (float)weights.Sum();
                 latentMix += Mixbox.RGBToLatent(colors[i]) * concentration;
             }
 
@@ -109,7 +112,7 @@ namespace Prismatic
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(colors, numMixedColors, Color);
+            return HashCode.Combine(colors, Color);
         }
     }
 }

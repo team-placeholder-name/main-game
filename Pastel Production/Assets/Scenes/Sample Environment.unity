@@ -737,13 +737,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
+      propertyPath: simulationData.entities.Array.data[0].HueMix.colors.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+        type: 3}
       propertyPath: simulationData.entities.Array.data[1].HueMix.colors.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
       propertyPath: simulationData.entities.Array.data[1].HueMix.weights.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
@@ -758,17 +763,17 @@ PrefabInstance:
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
       propertyPath: simulationData.entities.Array.data[1].HueMix.colors.Array.data[0].b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
       propertyPath: simulationData.entities.Array.data[1].HueMix.colors.Array.data[0].g
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
       propertyPath: simulationData.entities.Array.data[1].HueMix.colors.Array.data[0].r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3580545130981308124, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}

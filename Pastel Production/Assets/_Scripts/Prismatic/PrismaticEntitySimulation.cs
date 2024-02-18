@@ -34,8 +34,22 @@ namespace Prismatic
         private StateType currentStateType;
 
         public enum StateType { Move, Swap, Refract, Project }
+
         private void Awake()
         {
+            // Add prismatic entity to simulation
+            PrismaticEntity pe1 = new PrismaticEntity(Vector3.zero, Quaternion.identity, new HueMix(
+                new List<Color>
+                {
+                    Color.yellow, Color.blue
+                },
+                new List<int>
+                {
+                    5, 1
+                }
+            ));
+            simulationData.entities.Add(pe1);
+
             Transition(currentStateType);
         }
 
