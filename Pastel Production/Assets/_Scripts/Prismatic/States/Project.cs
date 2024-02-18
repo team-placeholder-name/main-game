@@ -35,6 +35,8 @@ namespace Prismatic
                 if (data.entities[i] == data.currentEntity) continue;
 
                 PrismaticEntity entityToCheck = data.entities[i];
+
+                //First check for obstructions
                 Vector3 entityOffset = entityToCheck.Position -data.currentEntity.Position;
                 if (Physics.Raycast(data.currentEntity.Position, entityOffset, entityOffset.magnitude, 1 << LayerMask.NameToLayer("Default")))
                 {
@@ -43,10 +45,8 @@ namespace Prismatic
                 }                                                                                              
 
 
+                //Second, check if it's the closest to the players view
                 Vector3 entityDirection = entityToCheck.Position - data.ViewPosition;
-
-
-
                 float angle = Vector3.Angle(viewDirection, entityDirection);
                 if (angle < smallestAngle)
                 {
