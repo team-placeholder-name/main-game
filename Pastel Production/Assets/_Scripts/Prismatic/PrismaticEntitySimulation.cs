@@ -72,14 +72,18 @@ namespace Prismatic
             GetState(currentStateType).Update(simulationData);
         }
 
-        public void MoveInput(Vector2 movementInput)
+        public void OnMoveInput(Vector2 movementInput)
         {
-            GetState(currentStateType).MoveInput(movementInput);
+            GetState(currentStateType).OnMoveInput(movementInput);
         }
 
-        public void MouseMove(Vector2 movementInput)
+        public void OnMouseMove(Vector2 movementInput)
         {
-            GetState(currentStateType).MoveMouse(movementInput);
+            GetState(currentStateType).OnMouseMove(movementInput);
+        }
+        public void OnSelect()
+        {
+            GetState(currentStateType).OnSelect(simulationData);
         }
     }
 
@@ -98,7 +102,7 @@ namespace Prismatic
         public List<PrismaticEntity> entities;
         [SerializeField]
         public int currentEntityIndex;
-        // Where does the player view originate from? this may be redundent because we have info about the current entity
+        // Where the player view originates from
         public Vector3 ViewPosition;
         // What is the player looking at. Aiming is essetnial for selecting targets, so this info must be preserved in the presntation
         public Vector3 ViewTarget;

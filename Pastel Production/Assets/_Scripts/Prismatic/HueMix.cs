@@ -36,6 +36,9 @@ namespace Prismatic
         }
         public static bool operator !=(HueMix left, HueMix right) => !(left == right);
 
+
+        
+
         /// <summary>
         /// Adds a color to the color mix. If that color already exists in the mix, its weight in the mix is increased.
         /// </summary>
@@ -56,6 +59,18 @@ namespace Prismatic
             Mix();
         }
 
+        /// <summary>
+        /// Adds a all colors from a different HueMix to the color mix. If that color already exists in the mix, its weight in the mix is increased.
+        /// </summary>
+        /// <param name="hueMix">The hueMix whos colors are added to the mix.</param>
+        public void AddColor(HueMix hueMix)
+        {
+            foreach(KeyValuePair<Color,int> color in hueMix.colors)
+            {
+                //AddColor
+            }
+
+        }
         /// <summary>
         /// Removes a color from the mix. If that color already exists in the mix, its weight in the mix will be reduced.
         /// </summary>

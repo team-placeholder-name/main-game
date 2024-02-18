@@ -15,8 +15,10 @@ namespace Prismatic
 
         public abstract void Update(SimulationData data);
 
-        public abstract void MoveInput(Vector2 movementInput);
-        public abstract void MoveMouse(Vector2 mousePos);
+        public abstract void OnMoveInput(Vector2 movementInput);
+        public abstract void OnMouseMove(Vector2 mousePos);
+
+        public abstract void OnSelect(SimulationData simulationData);
 
     }
 }
