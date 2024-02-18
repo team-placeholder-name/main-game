@@ -2,19 +2,25 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using Scrtwpns.Mixbox;
+using Unity.VisualScripting;
 
 namespace Prismatic
 {
     [System.Serializable]
     public class HueMix : IEquatable<HueMix>
     {
-        private Dictionary<Color, int> colors = new Dictionary<Color, int>();
-        private int numMixedColors = 0;
+        // private Dictionary<Color, int> colors = new Dictionary<Color, int>();
+        [SerializeField]
+        private List<Color> colors = new List<Color>();
+        [SerializeField]
+        private List<int> weights = new List<int>();
+
+        private int numMixedColors = 1;
 
         /// <summary>
         /// The approximated mix of all input colors.
         /// </summary>
-        public Color Color { get; private set; }
+        public Color Color { get; private set; } = Color.red;
 
         // Equality overrides
         public override bool Equals(object other) => this.Equals(other as HueMix);
@@ -42,13 +48,14 @@ namespace Prismatic
         /// <param name="color">The color added to the mix.</param>
         public void AddColor(Color color)
         {
-            if(colors.ContainsKey(color))
+            if(colors.Contains(color))
             {
-                colors[color]++;
+                weights[colors.IndexOf(color)]++;
             }
             else
             {
-                colors.Add(color, 1);
+                colors.Add(color);
+                weights.Add(1);
             }
 
             numMixedColors++;
@@ -62,15 +69,16 @@ namespace Prismatic
         /// <param name="color">The color removed from the mix.</param>
         public void RemoveColor(Color color)
         {
-            if(!colors.ContainsKey(color)) return;
+            if(!colors.Contains(color)) return;
 
-            if (colors[color] == 1)
+            if (weights[colors.IndexOf(color)] == 1)
             {
                 colors.Remove(color);
+                weights.RemoveAt(colors.IndexOf(color));
             }
             else
             {
-                colors[color]--;
+                weights[colors.IndexOf(color)]--;
             }
 
             numMixedColors--;
@@ -90,10 +98,10 @@ namespace Prismatic
             }
 
             MixboxLatent latentMix = new MixboxLatent();
-            foreach(KeyValuePair<Color, int> pair in colors)
+            for(int i = 0; i < colors.Count; i++)
             {
-                float concentration = pair.Value / (float)numMixedColors;
-                latentMix += Mixbox.RGBToLatent(pair.Key) * concentration;
+                float concentration = weights[i] / (float)numMixedColors;
+                latentMix += Mixbox.RGBToLatent(colors[i]) * concentration;
             }
 
             Color = Mixbox.LatentToRGB(latentMix);
