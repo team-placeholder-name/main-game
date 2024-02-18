@@ -101,7 +101,7 @@ namespace Prismatic
         [SerializeField]
         public List<PrismaticEntity> entities;
         [SerializeField]
-        public int currentEntityIndex;
+        public PrismaticEntity currentEntity;
         // Where the player view originates from
         public Vector3 ViewPosition;
         // What is the player looking at. Aiming is essetnial for selecting targets, so this info must be preserved in the presntation
@@ -120,7 +120,7 @@ namespace Prismatic
 
         private SimulationData data;
         public ReadOnlyCollection<PrismaticEntity> Entities { get => data.entities.AsReadOnly(); }
-        public int currentIndex { get => data.currentEntityIndex; }
+        public PrismaticEntity currentIndex { get => data.currentEntity; }
         public Vector3 ViewPosition { get => data.ViewPosition; }
         public Vector3 ViewTarget { get => data.ViewTarget; }
     }

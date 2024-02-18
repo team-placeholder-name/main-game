@@ -67,7 +67,8 @@ namespace Prismatic
         {
             foreach(KeyValuePair<Color,int> color in hueMix.colors)
             {
-                //AddColor
+                for(int i = 0;i<color.Value;i++)
+                    AddColor(color.Key);
             }
 
         }
