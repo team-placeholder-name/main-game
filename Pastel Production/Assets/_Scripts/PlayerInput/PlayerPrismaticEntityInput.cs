@@ -41,4 +41,13 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
     {
         controlledSimulation.OnSelect();
     }
+
+    /// <summary>
+    /// Called with Unity's Send Message system from Player Input
+    /// </summary>
+    /// <param name="value"></param>
+    private void OnProject(InputValue value)
+    {
+        controlledSimulation.OnProject();
+    }
 }

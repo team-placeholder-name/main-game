@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Prismatic
 {
+
+    public enum StateType { Move, Swap, Refract, Project }//not sure were best to put this
+
     public class PrismaticEntitySimulation : MonoBehaviour
     {
 
@@ -33,10 +36,15 @@ namespace Prismatic
         [SerializeField]
         private StateType currentStateType;
 
-        public enum StateType { Move, Swap, Refract, Project }
+        
 
         private void Awake()
         {
+            simulationData.currentEntity = simulationData.entities[0];
+            Transition(currentStateType);
+
+
+
             // Add prismatic entity to simulation
             PrismaticEntity pe1 = new PrismaticEntity(Vector3.zero, Quaternion.identity, new HueMix(
                 new List<Color>
@@ -50,7 +58,7 @@ namespace Prismatic
             ));
             simulationData.entities.Add(pe1);
 
-            Transition(currentStateType);
+
         }
 
         public State GetState(StateType stateType)
@@ -75,7 +83,7 @@ namespace Prismatic
         {
             GetState(currentStateType).Exit(simulationData);
             currentStateType = nextState;
-            GetState(currentStateType).Enter(simulationData);
+            GetState(currentStateType).Enter(Transition, simulationData);
         }
 
 
@@ -99,6 +107,10 @@ namespace Prismatic
         {
             GetState(currentStateType).OnSelect(simulationData);
         }
+        public void OnProject()
+        {
+            GetState(currentStateType).OnProject(simulationData);
+        }
     }
 
 
@@ -110,6 +122,7 @@ namespace Prismatic
         public SimulationData()
         {
             readOnlyData = new ReadOnlySimulationData(this);
+            
         }
         public readonly ReadOnlySimulationData readOnlyData;
         [SerializeField]

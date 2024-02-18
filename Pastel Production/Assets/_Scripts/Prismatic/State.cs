@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +9,33 @@ namespace Prismatic
 
     public abstract class State
     {
-
-        public abstract void Exit(SimulationData data);
-
-        public abstract void Enter(SimulationData data);
+        private Action<StateType> transition;
+        /// <summary>
+        /// Transitions to the simulation to the specified state
+        /// </summary>
+        /// <param name="type"></param>
+        protected void Transition(StateType type)
+        {
+            transition.Invoke(type);
+            
+        }
+        /// <summary>
+        /// Clears the transition delegate
+        /// </summary>
+        /// <param name="data"></param>
+        public virtual void Exit(SimulationData data)
+        {
+            transition = null;
+        }
+        /// <summary>
+        /// Store the transition of the current simulation
+        /// </summary>
+        /// <param name="transition"></param>
+        /// <param name="data"></param>
+        public virtual void Enter(Action<StateType> transition, SimulationData data)
+        {
+            this.transition = transition;
+        }
 
         public abstract void Update(SimulationData data);
 
@@ -19,6 +43,8 @@ namespace Prismatic
         public abstract void OnMouseMove(Vector2 mousePos);
 
         public abstract void OnSelect(SimulationData simulationData);
+
+        public abstract void OnProject(SimulationData simulationData);
 
     }
 }

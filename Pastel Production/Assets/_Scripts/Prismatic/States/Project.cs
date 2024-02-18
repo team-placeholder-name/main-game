@@ -9,13 +9,7 @@ namespace Prismatic
         private float targetRange;
         private float xAngle, yAngle;
 
-        public override void Enter(SimulationData data)
-        {
-        }
-
-        public override void Exit(SimulationData data)
-        {
-        }
+  
 
         public override void Update(SimulationData data)
         {
@@ -31,14 +25,14 @@ namespace Prismatic
             Vector3 viewDirection = data.ViewTarget - data.ViewPosition;
 
             float smallestAngle= Mathf.Infinity;
-            int targetIndex = -1;
+            PrismaticEntity targetEntity = null;
             Debug.Log("Projecting");
 
 
             //loop through all entities and find the one with the smallest angle to the player's view
             for(int i = 0; i<data.entities.Count; i++ )
             {
-                if (i == data.currentEntityIndex) continue;
+                if (data.entities[i] == data.currentEntity) continue;
 
                 PrismaticEntity entityToCheck = data.entities[i];
                 Vector3 entityDirection = entityToCheck.Position - data.ViewPosition;
@@ -47,18 +41,19 @@ namespace Prismatic
                 if (angle < smallestAngle)
                 {
                     smallestAngle = angle;
-                    targetIndex = i;
+                    targetEntity = data.entities[i];
                 }
             }
 
 
             //project
-            if ( targetIndex!= -1)
+            if ( targetEntity!= null)
             {
-                data.entities[targetIndex].HueMix.AddColor(data.entities[data.currentEntityIndex].HueMix);
-                data.currentEntityIndex = targetIndex;
-
-                Debug.Log("Selected entity: " + data.currentEntityIndex);
+                targetEntity.HueMix.AddColor(data.currentEntity.HueMix);
+                data.entities.Remove(data.currentEntity);
+                data.currentEntity = targetEntity;
+                Debug.Log("Selected entity: " + data.currentEntity);
+                Transition(StateType.Move);
             }
         }
 
@@ -75,8 +70,13 @@ namespace Prismatic
         {
             float viewDistance = 5;
             Vector3 offset = Quaternion.AngleAxis(xAngle, Vector3.up) * Quaternion.AngleAxis(yAngle, Vector3.right) * Vector3.back * viewDistance;
-            data.ViewPosition = data.entities[data.currentEntityIndex].Position + offset;
-            data.ViewTarget = data.entities[data.currentEntityIndex].Position + Vector3.up;
+            data.ViewPosition = data.currentEntity.Position + offset;
+            data.ViewTarget = data.currentEntity.Position + Vector3.up;
+        }
+
+        public override void OnProject(SimulationData simulationData)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

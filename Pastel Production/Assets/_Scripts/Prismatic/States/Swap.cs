@@ -9,20 +9,12 @@ namespace Prismatic
 
         Vector2 mouseMove;
 
-        public override void Enter(SimulationData data)
-        {
-            throw new System.NotImplementedException();
-        }
 
-        public override void Exit(SimulationData data)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public override void Update(SimulationData data)
         {
             // Update the camera
-            Vector3 entityPosition = data.entities[data.currentEntityIndex].Position;
+            Vector3 entityPosition = data.currentEntity.Position;
             Vector3 pivotDistance = data.cameraData.GetCameraPosition() - entityPosition;
 
 
@@ -39,6 +31,11 @@ namespace Prismatic
         }
 
         public override void OnSelect(SimulationData simulationData)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void OnProject(SimulationData simulationData)
         {
             throw new System.NotImplementedException();
         }

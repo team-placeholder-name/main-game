@@ -77,10 +77,10 @@ namespace Prismatic
         /// <param name="hueMix">The hueMix whos colors are added to the mix.</param>
         public void AddColor(HueMix hueMix)
         {
-            foreach(KeyValuePair<Color,int> color in hueMix.colors)
+            for (int i = 0; i < hueMix.colors.Count; i++ )
             {
-                for(int i = 0;i<color.Value;i++)
-                    AddColor(color.Key);
+                for(int j = 0;j<hueMix.weights[i];j++)
+                    AddColor(hueMix.colors[i]);
             }
 
         }
