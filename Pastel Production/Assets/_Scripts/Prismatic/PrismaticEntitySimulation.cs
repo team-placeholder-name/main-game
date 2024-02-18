@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Prismatic
 {
+
+    public enum StateType { Move, Swap, Refract, Project }//not sure were best to put this
+
     public class PrismaticEntitySimulation : MonoBehaviour
     {
 
@@ -33,10 +36,29 @@ namespace Prismatic
         [SerializeField]
         private StateType currentStateType;
 
-        public enum StateType { Move, Swap, Refract, Project }
+        
+
         private void Awake()
         {
+            simulationData.currentEntity = simulationData.entities[0];
             Transition(currentStateType);
+
+
+
+            // Add prismatic entity to simulation
+            PrismaticEntity pe1 = new PrismaticEntity(Vector3.zero, Quaternion.identity, new HueMix(
+                new List<Color>
+                {
+                    Color.yellow, Color.blue
+                },
+                new List<int>
+                {
+                    5, 1
+                }
+            ));
+            simulationData.entities.Add(pe1);
+
+
         }
 
         public State GetState(StateType stateType)
@@ -61,7 +83,7 @@ namespace Prismatic
         {
             GetState(currentStateType).Exit(simulationData);
             currentStateType = nextState;
-            GetState(currentStateType).Enter(simulationData);
+            GetState(currentStateType).Enter(Transition, simulationData);
         }
 
 
@@ -72,32 +94,45 @@ namespace Prismatic
             GetState(currentStateType).Update(simulationData);
         }
 
-        public void MoveInput(Vector2 movementInput)
+        public void OnMoveInput(Vector2 movementInput)
         {
-            GetState(currentStateType).MoveInput(movementInput);
+            GetState(currentStateType).OnMoveInput(movementInput);
         }
 
-        public void MouseMove(Vector2 movementInput)
+        public void OnMouseMove(Vector2 movementInput)
         {
-            GetState(currentStateType).MoveMouse(movementInput);
+            GetState(currentStateType).OnMouseMove(movementInput);
+        }
+        public void OnSelect()
+        {
+            GetState(currentStateType).OnSelect(simulationData);
+        }
+        public void OnProject()
+        {
+            GetState(currentStateType).OnProject(simulationData);
         }
     }
 
 
 
-    //This class is used to store the data that is shared between states. Use as sparingly as possible
+    //Stores the data that is shared between states. Use as sparingly as possible
     [System.Serializable]
     public class SimulationData
     {
         public SimulationData()
         {
             readOnlyData = new ReadOnlySimulationData(this);
+            
         }
         public readonly ReadOnlySimulationData readOnlyData;
         [SerializeField]
         public List<PrismaticEntity> entities;
         [SerializeField]
-        public int currentEntityIndex;
+        public PrismaticEntity currentEntity;
+        // Where the player view originates from
+        public Vector3 ViewPosition;
+        // What is the player looking at. Aiming is essetnial for selecting targets, so this info must be preserved in the presntation
+        public Vector3 ViewTarget;
         public CameraData cameraData;
     }
 
@@ -112,7 +147,9 @@ namespace Prismatic
 
         private SimulationData data;
         public ReadOnlyCollection<PrismaticEntity> Entities { get => data.entities.AsReadOnly(); }
-        public int currentIndex { get => data.currentEntityIndex; }
+        public PrismaticEntity currentIndex { get => data.currentEntity; }
+        public Vector3 ViewPosition { get => data.ViewPosition; }
+        public Vector3 ViewTarget { get => data.ViewTarget; }
     }
 
     

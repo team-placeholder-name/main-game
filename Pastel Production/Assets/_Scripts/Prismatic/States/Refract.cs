@@ -4,28 +4,31 @@ using UnityEngine;
 namespace Prismatic
 {
     [System.Serializable]
-    public class Project : State
+    public class Refract : State
     {
-        public override void Enter(SimulationData data)
-        {
-            throw new System.NotImplementedException();
-        }
 
-        public override void Exit(SimulationData data)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public override void Update(SimulationData data)
         {
             throw new System.NotImplementedException();
         }
 
-        public override void MoveInput(Vector2 movementInput)
+        public override void OnMoveInput(Vector2 movementInput)
         {
             throw new System.NotImplementedException();
         }
-        public override void MoveMouse(Vector2 mousePos)
+
+        public override void OnMouseMove(Vector2 mousePos)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void OnSelect(SimulationData simulationData)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void OnProject(SimulationData simulationData)
         {
             throw new System.NotImplementedException();
         }
