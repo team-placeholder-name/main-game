@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 namespace Prismatic
 {
@@ -8,6 +10,7 @@ namespace Prismatic
     {
         private float targetRange;
         private float xAngle, yAngle;
+        private float yAngleLimit;
 
   
 
@@ -20,11 +23,19 @@ namespace Prismatic
         {
             
         }
+
+        public override void Enter(Action<StateType> transition, SimulationData data)
+        {
+            yAngleLimit = data.maxYAngle;
+            xAngle = data.XYAngles.x;
+            yAngle = data.XYAngles.y;
+            base.Enter(transition, data);
+        }
         public override void OnSelect(SimulationData data)
         {
             Vector3 viewDirection = data.ViewTarget - data.ViewPosition;
 
-            float smallestAngle= Mathf.Infinity;
+            float smallestAngle = Mathf.Infinity;
             PrismaticEntity targetEntity = null;
             Debug.Log("Projecting");
 
@@ -72,8 +83,8 @@ namespace Prismatic
         {
             xAngle += mouseDelta.x;
             yAngle += mouseDelta.y;
-            yAngle = Mathf.Clamp(yAngle, -89, 89);
-
+            yAngle = Mathf.Clamp(yAngle, -yAngleLimit * 0.5f, yAngleLimit);
+            
         }
 
 
@@ -83,6 +94,7 @@ namespace Prismatic
             Vector3 offset = Quaternion.AngleAxis(xAngle, Vector3.up) * Quaternion.AngleAxis(yAngle, Vector3.right) * Vector3.back * viewDistance;
             data.ViewPosition = data.currentEntity.Position + offset;
             data.ViewTarget = data.currentEntity.Position + Vector3.up;
+            data.XYAngles = new Vector2(xAngle, yAngle);
         }
 
         public override void OnProject(SimulationData simulationData)
