@@ -40,17 +40,39 @@ namespace Prismatic
 
         public override void OnSelect(SimulationData data)
         {
+            float smallestAngle = 1000f;
+            PrismaticEntity targetEntity = null;
             Vector3 viewDirection = data.ViewTarget - data.ViewPosition;
             for (int i = 0; i < data.entities.Count; i++)
             {
+                if (data.entities[i] == data.currentEntity) continue;
+
                 PrismaticEntity entityToCheck = data.entities[i];
-                Vector3 posToCheck = entityToCheck.Position;
-                if (UtilityFunctions.VectorPointIntersect(data.ViewPosition, viewDirection, posToCheck, 0.5f)) // Probably should add this a controllable parameter
+
+                //First check for obstructions
+                Vector3 entityOffset = entityToCheck.Position - data.currentEntity.Position;
+                if (Physics.Raycast(data.currentEntity.Position, entityOffset, entityOffset.magnitude, 1 << LayerMask.NameToLayer("Default")))
                 {
-                    // We swap
-                    data.currentEntity = entityToCheck;
-                    Transition(StateType.Move);
+                    Debug.Log("Entity Blocked");
+                    continue;
                 }
+
+
+                //Second, check if it's the closest to the players view
+                Vector3 entityDirection = entityToCheck.Position - data.ViewPosition;
+                float angle = Vector3.Angle(viewDirection, entityDirection);
+                if (angle < smallestAngle)
+                {
+                    smallestAngle = angle;
+                    targetEntity = data.entities[i];
+                }
+            }
+
+            if (targetEntity != null)
+            {
+                //Do the hustle
+                data.currentEntity = targetEntity;
+                Transition(StateType.Move);
             }
             
         }

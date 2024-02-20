@@ -16,7 +16,7 @@ namespace PastelUtilities
             Vector3 remainderVector = origin - pointOfInterest;
             if (direction.x == 0 || direction.y == 0 || direction.z == 0)
             {
-                // There should never be 0 values in these directions
+                // There should never be perfectly 0 values in these directions
                 return false;
             }
             else
