@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using PastelUtilities;
 namespace Prismatic
 {
     [System.Serializable]
@@ -12,7 +13,7 @@ namespace Prismatic
         public override void Update(SimulationData data)
         {
             Vector3 viewDirection = data.ViewTarget - data.ViewPosition;
-            //Debug.DrawRay(data.ViewPosition, viewDirection * 10, Color.yellow);
+            Debug.DrawRay(data.ViewPosition, viewDirection * 10, Color.yellow);
             UpdateView(data);
 
         }
@@ -37,35 +38,21 @@ namespace Prismatic
             yAngle = Mathf.Clamp(yAngle, -yAngleLimit, yAngleLimit);
         }
 
-        public override void OnSelect(SimulationData simulationData)
+        public override void OnSelect(SimulationData data)
         {
-            // On a select input, send out a ray from the camera view direction.
-            // If that ray collides with another entity, swap controls with it
-            RaycastHit rayHit;
-
-            int targetLayer = 1 << LayerMask.NameToLayer("Default");
-
-            Vector3 viewDirection = simulationData.ViewTarget - simulationData.ViewPosition;
-            
-            if (Physics.Raycast(simulationData.ViewPosition, viewDirection, out rayHit, Mathf.Infinity, targetLayer))
+            Vector3 viewDirection = data.ViewTarget - data.ViewPosition;
+            for (int i = 0; i < data.entities.Count; i++)
             {
-                Debug.Log(rayHit.transform.gameObject.tag);
-                if (rayHit.transform.gameObject.CompareTag("Player"))
+                PrismaticEntity entityToCheck = data.entities[i];
+                Vector3 posToCheck = entityToCheck.Position;
+                if (UtilityFunctions.VectorPointIntersect(data.ViewPosition, viewDirection, posToCheck, 0.5f)) // Probably should add this a controllable parameter
                 {
-                    // If I hit an entity, swap with it
-                    // It would be cool if the entity index was queryable directly, so we didn't have to iterate
-                    Vector3 hitPosition = rayHit.transform.position;
-                    for (int i = 0; i < simulationData.entities.Count; i++)
-                    {
-                        if (hitPosition == simulationData.entities[i].Position)
-                        {
-                            simulationData.currentEntity = simulationData.entities[i];
-                            Transition(StateType.Move);
-                            return;
-                        }
-                    }
+                    // We swap
+                    data.currentEntity = entityToCheck;
+                    Transition(StateType.Move);
                 }
             }
+            
         }
 
         public override void OnProject(SimulationData simulationData)
