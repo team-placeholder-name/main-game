@@ -125,19 +125,23 @@ namespace Prismatic
             
         }
         public readonly ReadOnlySimulationData readOnlyData;
-        [SerializeField]
+
         public List<PrismaticEntity> entities;
-        [SerializeField]
+
         public PrismaticEntity currentEntity;
+
+
         // Where the player view originates from
+        [HideInInspector]
         public Vector3 ViewPosition;
         // What is the player looking at. Aiming is essential for selecting targets, so this info must be preserved in the presentation
+        [HideInInspector]
         public Vector3 ViewTarget;
-
+        [HideInInspector]
         public Vector2 XYAngles;
 
         // Max Vertical Rotation - currently this is hardcoded but it should be configurable via editor until we find something comfortable
-        public float maxYAngle;
+        public const float maxYAngle =89;
 
     }
 
