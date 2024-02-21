@@ -49,11 +49,11 @@ namespace Prismatic
             PrismaticEntity pe1 = new PrismaticEntity(Vector3.zero, Quaternion.identity, new HueMix(
                 new List<Color>
                 {
-                    Color.yellow, Color.blue
+                    Color.red, Color.blue, Color.green, Color.cyan, Color.magenta, Color.yellow
                 },
                 new List<int>
                 {
-                    5, 1
+                    1, 1, 1, 1, 1, 1
                 }
             ));
             simulationData.entities.Add(pe1);
@@ -88,7 +88,7 @@ namespace Prismatic
 
 
         //TODO: Add Input Types to simulation and entity strategies
-        
+
         private void Update()
         {
             GetState(currentStateType).Update(simulationData);
@@ -110,6 +110,11 @@ namespace Prismatic
         public void OnProject()
         {
             GetState(currentStateType).OnProject(simulationData);
+        }
+
+        public void OnRefract()
+        {
+            GetState(currentStateType).OnRefract(simulationData);
         }
     }
 
@@ -145,7 +150,6 @@ namespace Prismatic
 
     }
 
-
     //If any shared state data needs to be read outside of the state, expose it here
     public class ReadOnlySimulationData
     {
@@ -156,7 +160,7 @@ namespace Prismatic
 
         private SimulationData data;
         public ReadOnlyCollection<PrismaticEntity> Entities { get => data.entities.AsReadOnly(); }
-        public PrismaticEntity currentIndex { get => data.currentEntity; }
+        public PrismaticEntity currentEntity { get => data.currentEntity; }
         public Vector3 ViewPosition { get => data.ViewPosition; }
         public Vector3 ViewTarget { get => data.ViewTarget; }
         public Vector3 XYAngles { get => data.XYAngles; }

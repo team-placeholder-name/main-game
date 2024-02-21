@@ -126,6 +126,11 @@ namespace Prismatic
         {
             Transition(StateType.Project);
         }
+
+        public override void OnRefract(SimulationData simulationData)
+        {
+            Transition(StateType.Refract);
+        }
     }
 
 }

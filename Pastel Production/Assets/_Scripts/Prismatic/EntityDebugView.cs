@@ -2,6 +2,7 @@ using Prismatic;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 namespace Prismatic
 {
     public class EntityDebugView : MonoBehaviour

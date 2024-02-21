@@ -85,5 +85,9 @@ namespace Prismatic
             data.XYAngles = new Vector2(xAngle, yAngle);
         }
 
+        public override void OnRefract(SimulationData simulationData)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
