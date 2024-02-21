@@ -6,6 +6,8 @@ namespace Prismatic
     [System.Serializable]
     public class Swap : State
     {
+        [SerializeField]
+        private Reticule reticule;
         private float xAngle, yAngle;
         private float yAngleLimit;
 
@@ -23,7 +25,14 @@ namespace Prismatic
             yAngleLimit = SimulationData.maxYAngle;
             xAngle = data.XYAngles.x;
             yAngle = data.XYAngles.y;
+            reticule.gameObject.SetActive(true);
             base.Enter(transition, data);
+        }
+
+        public override void Exit(SimulationData data)
+        {
+            reticule.gameObject.SetActive(false);
+            base.Exit(data);
         }
 
         public override void OnMoveInput(Vector2 movementInput)

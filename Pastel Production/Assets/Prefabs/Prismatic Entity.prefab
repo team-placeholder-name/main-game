@@ -250,11 +250,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   simulationData:
     entities: []
-    currentEntityIndex: 0
+    currentEntity:
+      Position: {x: 0, y: 0, z: 0}
+      Rotation: {x: 0, y: 0, z: 0, w: 0}
+      HueMix:
+        colors: []
+        weights: 
     ViewPosition: {x: 0, y: 0, z: 0}
     ViewTarget: {x: 0, y: 0, z: 0}
+    XYAngles: {x: 0, y: 0}
   move:
     speed: 5
   swap:
-    theta: 0
+    reticule: {fileID: 2134063473265720927, guid: be634abe2e0edaf469f1582b233477e1,
+      type: 3}
+  refract:
+    colorWheel: {fileID: 0}
   currentStateType: 0
