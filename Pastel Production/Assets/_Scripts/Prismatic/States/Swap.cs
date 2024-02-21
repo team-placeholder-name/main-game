@@ -49,14 +49,6 @@ namespace Prismatic
 
                 PrismaticEntity entityToCheck = data.entities[i];
 
-                //First check for obstructions
-                Vector3 entityOffset = entityToCheck.Position - data.currentEntity.Position;
-                if (Physics.Raycast(data.currentEntity.Position, entityOffset, entityOffset.magnitude, 1 << LayerMask.NameToLayer("Default")))
-                {
-                    Debug.Log("Entity Blocked");
-                    continue;
-                }
-
 
                 //Second, check if it's the closest to the players view
                 Vector3 entityDirection = entityToCheck.Position - data.ViewPosition;

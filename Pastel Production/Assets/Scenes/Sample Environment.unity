@@ -550,7 +550,8 @@ GameObject:
   - component: {fileID: 1000408668}
   - component: {fileID: 1000408667}
   - component: {fileID: 1000408666}
-  m_Layer: 0
+  - component: {fileID: 1000408669}
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -643,6 +644,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000408664}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1000408669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000408664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c69e1808d836fe48b5bb23d75af2f85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hue:
+    colors:
+    - {r: 1, g: 1, b: 1, a: 1}
+    weights: 01000000
 --- !u!1001 &1310780814
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -660,6 +677,11 @@ PrefabInstance:
         type: 3}
       propertyPath: entities.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+        type: 3}
+      propertyPath: simulationData.maxYAngle
+      value: 89
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
@@ -834,12 +856,12 @@ PrefabInstance:
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
       propertyPath: simulationData.entities.Array.data[0].HueMix.colors.Array.data[0].b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
       propertyPath: simulationData.entities.Array.data[0].HueMix.colors.Array.data[0].g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}

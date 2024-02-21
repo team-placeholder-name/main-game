@@ -49,7 +49,7 @@ namespace Prismatic
 
                 //First check for obstructions
                 Vector3 entityOffset = entityToCheck.Position -data.currentEntity.Position;
-                if (Physics.Raycast(data.currentEntity.Position, entityOffset, entityOffset.magnitude, 1 << LayerMask.NameToLayer("Default")))
+                if (Physics.Raycast(data.currentEntity.Position+Vector3.up*0.5f, entityOffset, entityOffset.magnitude, 1 << LayerMask.NameToLayer("Default")))
                 {
                     Debug.Log("Entity Blocked");
                     continue;
