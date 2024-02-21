@@ -52,8 +52,8 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
         controlledSimulation.OnProject();
     }
 
-    private void OnRightClick(InputValue value)
+    private void OnRefract(InputValue value)
     {
-        controlledSimulation.MouseRightClick(Convert.ToBoolean(value.Get()));
+        controlledSimulation.OnRefract();
     }
 }

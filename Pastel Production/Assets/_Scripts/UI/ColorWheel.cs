@@ -38,7 +38,7 @@ public class ColorWheel : MonoBehaviour
         }
     }
 
-    private void ReformColorWheel()
+    public void ReformColorWheel()
     {
         // Destroy all color selectors on the colorwheel
         for(int i = transform.childCount - 1; i >= 0; i--)

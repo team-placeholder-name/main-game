@@ -49,11 +49,11 @@ namespace Prismatic
             PrismaticEntity pe1 = new PrismaticEntity(Vector3.zero, Quaternion.identity, new HueMix(
                 new List<Color>
                 {
-                    Color.red, Color.blue, Color.green, Color.cyan, Color.magenta, Color.yellow, Color.gray, Color.black, Color.white 
+                    Color.red, Color.blue, Color.green, Color.cyan, Color.magenta, Color.yellow
                 },
                 new List<int>
                 {
-                    5, 1, 2, 3, 4, 1, 2, 3, 4,
+                    1, 1, 1, 1, 1, 1
                 }
             ));
             simulationData.entities.Add(pe1);
@@ -112,16 +112,9 @@ namespace Prismatic
             GetState(currentStateType).OnProject(simulationData);
         }
 
-        public void MouseRightClick(bool isMouseRightDown)
+        public void OnRefract()
         {
-            if (isMouseRightDown && currentStateType != StateType.Refract)
-            {
-                Transition(StateType.Refract);
-            }
-            else
-            {
-                Transition(StateType.Move);
-            }
+            GetState(currentStateType).OnRefract(simulationData);
         }
     }
 

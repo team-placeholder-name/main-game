@@ -11,6 +11,7 @@ namespace Prismatic
     public class HueMix : IEquatable<HueMix>
     {
         public List<Color> Colors { get => colors; }
+        public List<int> Weights { get => weights; }
 
         // private Dictionary<Color, int> colors = new Dictionary<Color, int>();
         [SerializeField]
@@ -96,8 +97,8 @@ namespace Prismatic
 
             if (weights[colors.IndexOf(color)] == 1)
             {
-                colors.Remove(color);
                 weights.RemoveAt(colors.IndexOf(color));
+                colors.Remove(color);
             }
             else
             {

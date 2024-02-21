@@ -101,5 +101,10 @@ namespace Prismatic
         {
             Transition(StateType.Move);
         }
+
+        public override void OnRefract(SimulationData simulationData)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

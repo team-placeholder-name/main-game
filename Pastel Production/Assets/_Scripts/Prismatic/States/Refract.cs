@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 namespace Prismatic
 {
@@ -10,26 +11,46 @@ namespace Prismatic
         [SerializeField]
         private ColorWheel colorWheel;
 
-        // The default value of target color used to compare if a color has been selected yet
-        private Color targetColor = Color.clear;
-
         public override void Enter(Action<StateType> transition, SimulationData data)
         {
             colorWheel.gameObject.SetActive(true);
             base.Enter(transition, data);
         }
 
-        public override void OnMoveInput(Vector2 movementInput)
+        public override void Exit(SimulationData data)
         {
             colorWheel.gameObject.SetActive(false);
-            targetColor = Color.clear;
         }
 
-        public override void OnMouseMove(Vector2 mousePos)
+        public override void OnMoveInput(Vector2 movementInput)
         {
-            if(colorWheel.ChosenColor != Color.clear)
+            Transition(StateType.Move);
+        }
+
+        public override void Update(SimulationData data)
+        {
+            if(data.currentEntity.HueMix.Weights.Sum() < 2)
             {
-                Debug.Log("Refracting to " +  colorWheel.ChosenColor);
+                Transition(StateType.Move);
+            }
+
+            if (colorWheel.ChosenColor != Color.clear)
+            {
+                data.currentEntity.HueMix.RemoveColor(colorWheel.ChosenColor);
+                PrismaticEntity refraction = new PrismaticEntity(data.currentEntity.Position, data.currentEntity.Rotation, new HueMix(
+                    new List<Color>
+                    {
+                        colorWheel.ChosenColor
+                    },
+                    new List<int>
+                    {
+                        1
+                    }
+                ));
+                data.entities.Add(refraction);
+                data.currentEntity = refraction;
+                colorWheel.ReformColorWheel();
+                Transition(StateType.Move);
             }
         }
 
@@ -43,7 +64,13 @@ namespace Prismatic
             throw new System.NotImplementedException();
         }
 
-        public override void Update(SimulationData data)
+        // Cancel refraction if state input is repeated in state
+        public override void OnRefract(SimulationData simulationData)
+        {
+            Transition(StateType.Move);
+        }
+
+        public override void OnMouseMove(Vector2 mousePos)
         {
             throw new NotImplementedException();
         }

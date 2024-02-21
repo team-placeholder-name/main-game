@@ -46,5 +46,7 @@ namespace Prismatic
 
         public abstract void OnProject(SimulationData simulationData);
 
+        public abstract void OnRefract(SimulationData simulationData);
+
     }
 }
