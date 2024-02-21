@@ -36,11 +36,18 @@ namespace Prismatic
             viewForward = viewForward.normalized;
             Vector3 moveForward = Vector3.ProjectOnPlane(viewForward, movementNormal).normalized;
             Quaternion view = Quaternion.LookRotation(moveForward, Vector3.up);
+
+            
             Matrix4x4 transformMatrix = Matrix4x4.Rotate(view);
 
             Vector3 nextPosition = data.currentEntity.Position + (Vector3)(transformMatrix * new Vector3(movementInput.x, 0, movementInput.y) * Time.deltaTime * speed);
 
+            if (nextPosition != data.currentEntity.Position)
+            {
 
+                Vector3 movementVector = nextPosition - data.currentEntity.Position;
+                data.currentEntity.Rotation = Quaternion.LookRotation(movementVector, Vector3.up);
+            }
             //Check for walls blocking movment
             if (
             Physics.SphereCast(entityCenter,
