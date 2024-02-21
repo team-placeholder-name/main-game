@@ -26,7 +26,7 @@ namespace Prismatic
 
         public override void Enter(Action<StateType> transition, SimulationData data)
         {
-            yAngleLimit = data.maxYAngle;
+            yAngleLimit = SimulationData.maxYAngle;
             xAngle = data.XYAngles.x;
             yAngle = data.XYAngles.y;
             base.Enter(transition, data);
