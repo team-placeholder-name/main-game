@@ -131,9 +131,14 @@ namespace Prismatic
         public PrismaticEntity currentEntity;
         // Where the player view originates from
         public Vector3 ViewPosition;
-        // What is the player looking at. Aiming is essetnial for selecting targets, so this info must be preserved in the presntation
+        // What is the player looking at. Aiming is essential for selecting targets, so this info must be preserved in the presentation
         public Vector3 ViewTarget;
-        public CameraData cameraData;
+
+        public Vector2 XYAngles;
+
+        // Max Vertical Rotation - currently this is hardcoded but it should be configurable via editor until we find something comfortable
+        public float maxYAngle;
+
     }
 
 
@@ -150,6 +155,7 @@ namespace Prismatic
         public PrismaticEntity currentIndex { get => data.currentEntity; }
         public Vector3 ViewPosition { get => data.ViewPosition; }
         public Vector3 ViewTarget { get => data.ViewTarget; }
+        public Vector3 XYAngles { get => data.XYAngles; }
     }
 
     
