@@ -638,7 +638,7 @@ PrefabInstance:
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
       propertyPath: simulationData.entities.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
@@ -837,6 +837,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6264153685535688795, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
+      propertyPath: m_UIInputModule
+      value: 
+      objectReference: {fileID: 1331502304}
+    - target: {fileID: 6264153685535688795, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+        type: 3}
       propertyPath: m_NotificationBehavior
       value: 0
       objectReference: {fileID: 0}
@@ -980,6 +985,95 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aed412a9ef4f8e64983d749a9aecb7fd, type: 3}
+--- !u!1 &1331502303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1331502306}
+  - component: {fileID: 1331502305}
+  - component: {fileID: 1331502304}
+  m_Layer: 0
+  m_Name: UI Events
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1331502304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331502303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 4980bf70c6061f14588867fb6036ce9d,
+    type: 3}
+  m_PointAction: {fileID: -3921386757896676812, guid: 4980bf70c6061f14588867fb6036ce9d,
+    type: 3}
+  m_MoveAction: {fileID: 7599806184171663510, guid: 4980bf70c6061f14588867fb6036ce9d,
+    type: 3}
+  m_SubmitAction: {fileID: 580248376023442829, guid: 4980bf70c6061f14588867fb6036ce9d,
+    type: 3}
+  m_CancelAction: {fileID: -730105916637580149, guid: 4980bf70c6061f14588867fb6036ce9d,
+    type: 3}
+  m_LeftClickAction: {fileID: -6393306221360528571, guid: 4980bf70c6061f14588867fb6036ce9d,
+    type: 3}
+  m_MiddleClickAction: {fileID: -6598838508029460173, guid: 4980bf70c6061f14588867fb6036ce9d,
+    type: 3}
+  m_RightClickAction: {fileID: 2206533849876878191, guid: 4980bf70c6061f14588867fb6036ce9d,
+    type: 3}
+  m_ScrollWheelAction: {fileID: -8310905412629060019, guid: 4980bf70c6061f14588867fb6036ce9d,
+    type: 3}
+  m_TrackedDevicePositionAction: {fileID: -6630225517092557378, guid: 4980bf70c6061f14588867fb6036ce9d,
+    type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: -4210420188703279633, guid: 4980bf70c6061f14588867fb6036ce9d,
+    type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
+--- !u!114 &1331502305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331502303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1331502306
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331502303}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1461827056
 GameObject:
   m_ObjectHideFlags: 0

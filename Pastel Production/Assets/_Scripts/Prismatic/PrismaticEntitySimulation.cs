@@ -16,6 +16,7 @@ namespace Prismatic
         public Refract Refract { get => refract; }
         public Project Project { get => project; }
         public StateType CurrentState { get => currentStateType; }
+        public bool isMouseRightDown;
 
         [SerializeField]
         private SimulationData simulationData;
@@ -80,7 +81,7 @@ namespace Prismatic
 
 
         //TODO: Add Input Types to simulation and entity strategies
-        
+
         private void Update()
         {
             GetState(currentStateType).Update(simulationData);
@@ -94,6 +95,11 @@ namespace Prismatic
         public void MouseMove(Vector2 movementInput)
         {
             GetState(currentStateType).MoveMouse(movementInput);
+        }
+
+        public void MouseRightClick(bool isMouseRightDown)
+        {
+            this.isMouseRightDown = isMouseRightDown;
         }
     }
 
@@ -114,7 +120,6 @@ namespace Prismatic
         public int currentEntityIndex;
         public CameraData cameraData;
     }
-
 
     //If any shared state data needs to be read outside of the state, expose it here
     public class ReadOnlySimulationData

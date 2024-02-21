@@ -46,4 +46,9 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
     {
         controlledSimulation.MouseMove(value.Get<Vector2>());
     }
+
+    private void OnRightClick(InputValue value)
+    {
+        // controlledSimulation.MouseRightClick(value.Get<bool>());
+    }
 }

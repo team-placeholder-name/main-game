@@ -2,6 +2,7 @@ using Prismatic;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 namespace Prismatic
 {
     public class EntityDebugView : MonoBehaviour
@@ -18,6 +19,14 @@ namespace Prismatic
                 Gizmos.DrawSphere(entity.Position + Vector3.up * radius, radius);//place the sphere on top of the position
             }
 
+        }
+
+        private void OnGUI()
+        {
+            if (simulationTarget.isMouseRightDown)
+            {
+                GUI.Box(new Rect(100, 100, 400, 30), "Right Click");
+            }
         }
     }
 }
