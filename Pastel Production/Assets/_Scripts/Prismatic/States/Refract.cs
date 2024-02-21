@@ -76,7 +76,7 @@ namespace Prismatic
 
         public override void OnMouseMove(Vector2 mousePos)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
