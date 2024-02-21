@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &28402730
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 28402731}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &28402731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28402730}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.4011115, y: -8.307257, z: 4.415853}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &54396617
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,6 +773,11 @@ PrefabInstance:
       objectReference: {fileID: 1544845995}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
+      propertyPath: currentStateType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+        type: 3}
       propertyPath: entities.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -758,7 +794,7 @@ PrefabInstance:
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
       propertyPath: simulationData.entities.Array.size
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
@@ -803,17 +839,37 @@ PrefabInstance:
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
       propertyPath: simulationData.entities.Array.data[0].Position.x
-      value: 0
+      value: -1.43
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
       propertyPath: simulationData.entities.Array.data[1].Position.x
-      value: 0
+      value: -3.36
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
       propertyPath: simulationData.entities.Array.data[1].Position.z
-      value: 0
+      value: 2.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+        type: 3}
+      propertyPath: simulationData.entities.Array.data[2].Position.x
+      value: -6.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+        type: 3}
+      propertyPath: simulationData.entities.Array.data[2].Position.z
+      value: 6.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+        type: 3}
+      propertyPath: simulationData.entities.Array.data[3].Position.x
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+        type: 3}
+      propertyPath: simulationData.entities.Array.data[3].Position.z
+      value: 6.27
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
@@ -858,12 +914,17 @@ PrefabInstance:
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
       propertyPath: simulationData.entities.Array.data[0].HueMix.colors.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
       propertyPath: simulationData.entities.Array.data[1].HueMix.colors.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+        type: 3}
+      propertyPath: simulationData.entities.Array.data[0].HueMix.weights.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
@@ -877,7 +938,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
+      propertyPath: simulationData.entities.Array.data[0].HueMix.weights.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+        type: 3}
       propertyPath: simulationData.entities.Array.data[1].HueMix.weights.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+        type: 3}
+      propertyPath: simulationData.entities.Array.data[0].HueMix.colors.Array.data[0].a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+        type: 3}
+      propertyPath: simulationData.entities.Array.data[0].HueMix.colors.Array.data[0].b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+        type: 3}
+      propertyPath: simulationData.entities.Array.data[0].HueMix.colors.Array.data[0].g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+        type: 3}
+      propertyPath: simulationData.entities.Array.data[0].HueMix.colors.Array.data[0].r
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,

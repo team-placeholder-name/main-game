@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simulationTarget: {fileID: 739844758233423123}
+  EntityModel: {fileID: 8732552424634671308, guid: f51538180482e4a4ba212e61c3ad316f,
+    type: 3}
 --- !u!1 &3872342452550566804
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,6 +248,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1d6dd1e4a633ac46b73ba4a5b67f173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entities: []
+  simulationData:
+    entities: []
+    currentEntityIndex: 0
+    ViewPosition: {x: 0, y: 0, z: 0}
+    ViewTarget: {x: 0, y: 0, z: 0}
+  move:
+    speed: 5
   swap:
-    test: 0
+    theta: 0
+  currentStateType: 0

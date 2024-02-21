@@ -5,21 +5,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+/// <summary>
+/// Recieves messages from player input component, transforms the data if necessary, and then passes it to the controlled simulation
+/// </summary>
 public class PlayerPrismaticEntityInput : MonoBehaviour
 {
     [SerializeField]
     private PrismaticEntitySimulation controlledSimulation;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     /// <summary>
     /// Called with Unity's Send Message system from Player Input
@@ -27,16 +21,7 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
     /// <param name="value"></param>
     private void OnMove(InputValue value)
     {
-        controlledSimulation.MoveInput(value.Get<Vector2>());
-    }
-
-    /// <summary>
-    /// Called with Unity's Send Message system from Player Input
-    /// </summary>
-    /// <param name="value"></param>
-    private void OnFire(InputValue value)
-    {
-
+        controlledSimulation.OnMoveInput(value.Get<Vector2>());
     }
 
     /// <summary>
@@ -45,7 +30,26 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
     /// <param name="value"></param>
     private void OnLook(InputValue value)
     {
-        controlledSimulation.MouseMove(value.Get<Vector2>());
+        controlledSimulation.OnMouseMove(value.Get<Vector2>());
+
+    }
+
+    /// <summary>
+    /// Called with Unity's Send Message system from Player Input
+    /// </summary>
+    /// <param name="value"></param>
+    private void OnSelect(InputValue value)
+    {
+        controlledSimulation.OnSelect();
+    }
+
+    /// <summary>
+    /// Called with Unity's Send Message system from Player Input
+    /// </summary>
+    /// <param name="value"></param>
+    private void OnProject(InputValue value)
+    {
+        controlledSimulation.OnProject();
     }
 
     private void OnRightClick(InputValue value)
