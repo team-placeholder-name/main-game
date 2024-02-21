@@ -58,7 +58,7 @@ public class ColorWheel : MonoBehaviour
             colorSelect.onClick.AddListener(() => ChosenColor = color);
 
             float angle = 2 * Mathf.PI * i / (float)numColors;
-            float radius = 100;
+            float radius = Camera.main.pixelHeight / 5;
             float x = Mathf.Cos(angle) * radius;
             float y = Mathf.Sin(angle) * radius;
 
