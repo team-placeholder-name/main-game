@@ -16,7 +16,6 @@ namespace Prismatic
         public Refract Refract { get => refract; }
         public Project Project { get => project; }
         public StateType CurrentState { get => currentStateType; }
-        public bool isMouseRightDown;
 
         [SerializeField]
         private SimulationData simulationData;
@@ -99,7 +98,14 @@ namespace Prismatic
 
         public void MouseRightClick(bool isMouseRightDown)
         {
-            this.isMouseRightDown = isMouseRightDown;
+            if (isMouseRightDown && currentStateType != StateType.Refract)
+            {
+                Transition(StateType.Refract);
+            }
+            else
+            {
+                Transition(StateType.Move);
+            }
         }
     }
 

@@ -13,10 +13,17 @@ public class ColorWheel : MonoBehaviour
 
     private PrismaticEntity currentEntity;
 
+    public Color ChosenColor { get; private set; } = Color.clear;
+
     // Start is called before the first frame update
     void Start()
     {
 
+    }
+
+    private void OnEnable()
+    {
+        ChosenColor = Color.clear;
     }
 
     // Update is called once per frame
@@ -48,12 +55,12 @@ public class ColorWheel : MonoBehaviour
             Button colorSelect = Instantiate(colorSelectPrefab, transform);
             colorSelect.GetComponent<Image>().color = color;
 
+            colorSelect.onClick.AddListener(() => ChosenColor = color);
+
             float angle = 2 * Mathf.PI * i / (float)numColors;
             float radius = 100;
             float x = Mathf.Cos(angle) * radius;
             float y = Mathf.Sin(angle) * radius;
-
-            Debug.Log(angle + " " + radius + " -> " + x + " " + y);
 
             colorSelect.transform.position = new Vector3(x, y, 0) + transform.position;
         }
