@@ -663,6 +663,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
+      propertyPath: simulationData.maxYAngle
+      value: 89
+      objectReference: {fileID: 0}
+    - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+        type: 3}
       propertyPath: entities.Array.data[1].Position.x
       value: 1.9
       objectReference: {fileID: 0}

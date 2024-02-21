@@ -14,6 +14,12 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
     private PrismaticEntitySimulation controlledSimulation;
 
 
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;   
+        Cursor.visible = false; 
+    }
+
     /// <summary>
     /// Called with Unity's Send Message system from Player Input
     /// </summary>
