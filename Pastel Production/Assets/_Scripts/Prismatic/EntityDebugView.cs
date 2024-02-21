@@ -20,13 +20,5 @@ namespace Prismatic
             }
 
         }
-
-        private void OnGUI()
-        {
-            if (simulationTarget.isMouseRightDown)
-            {
-                GUI.Box(new Rect(100, 100, 400, 30), "Right Click");
-            }
-        }
     }
 }

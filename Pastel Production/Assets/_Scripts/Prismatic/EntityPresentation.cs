@@ -8,16 +8,13 @@ namespace Prismatic
     {
         [SerializeField]
         private PrismaticEntitySimulation simulationTarget;
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
+        [SerializeField]
+        private GameObject colorWheel;
 
         // Update is called once per frame
         void Update()
         {
-
+            colorWheel.SetActive(simulationTarget.isMouseRightDown);
         }
     }
 }

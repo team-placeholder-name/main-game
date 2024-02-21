@@ -325,9 +325,9 @@
                 },
                 {
                     "name": "RightClick",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "a93f823e-900e-4e5f-920a-97d46c196be2",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -743,7 +743,7 @@
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": "Keyboard&Mouse",
                     "action": "RightClick",
                     "isComposite": false,
                     "isPartOfComposite": false

@@ -1,4 +1,5 @@
 using Prismatic;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,6 +50,6 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
 
     private void OnRightClick(InputValue value)
     {
-        // controlledSimulation.MouseRightClick(value.Get<bool>());
+        controlledSimulation.MouseRightClick(Convert.ToBoolean(value.Get()));
     }
 }

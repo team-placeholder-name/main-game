@@ -10,6 +10,8 @@ namespace Prismatic
     [System.Serializable]
     public class HueMix : IEquatable<HueMix>
     {
+        public List<Color> Colors { get => colors; }
+
         // private Dictionary<Color, int> colors = new Dictionary<Color, int>();
         [SerializeField]
         private List<Color> colors = new List<Color>();

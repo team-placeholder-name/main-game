@@ -42,11 +42,11 @@ namespace Prismatic
             PrismaticEntity pe1 = new PrismaticEntity(Vector3.zero, Quaternion.identity, new HueMix(
                 new List<Color>
                 {
-                    Color.yellow, Color.blue
+                    Color.red, Color.blue, Color.green, Color.cyan, Color.magenta, Color.yellow, Color.gray, Color.black, Color.white 
                 },
                 new List<int>
                 {
-                    5, 1
+                    5, 1, 2, 3, 4, 1, 2, 3, 4,
                 }
             ));
             simulationData.entities.Add(pe1);
