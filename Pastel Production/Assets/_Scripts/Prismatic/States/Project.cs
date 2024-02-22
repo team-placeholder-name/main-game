@@ -8,6 +8,8 @@ namespace Prismatic
     [System.Serializable]
     public class Project : State
     {
+        [SerializeField]
+        private Reticule reticule;
         private float targetRange;
         private float xAngle, yAngle;
         private float yAngleLimit;
@@ -29,6 +31,7 @@ namespace Prismatic
             yAngleLimit = SimulationData.maxYAngle;
             xAngle = data.XYAngles.x;
             yAngle = data.XYAngles.y;
+            reticule.gameObject.SetActive(true);
             base.Enter(transition, data);
         }
         public override void OnSelect(SimulationData data)
@@ -93,13 +96,21 @@ namespace Prismatic
             float viewDistance = 5;
             Vector3 offset = Quaternion.AngleAxis(xAngle, Vector3.up) * Quaternion.AngleAxis(yAngle, Vector3.right) * Vector3.back * viewDistance;
             data.ViewPosition = data.currentEntity.Position + offset;
-            data.ViewTarget = data.currentEntity.Position + Vector3.up;
+            
+            // We need to give ourselves a little headroom - otherwise we'll just intersect with the main player object.
+            data.ViewTarget = data.currentEntity.Position + Vector3.up * 2;
             data.XYAngles = new Vector2(xAngle, yAngle);
         }
 
         public override void OnProject(SimulationData simulationData)
         {
             Transition(StateType.Move);
+        }
+
+        public override void Exit(SimulationData data)
+        {
+            reticule.gameObject.SetActive(false);
+            base.Exit(data);
         }
 
         public override void OnRefract(SimulationData simulationData)
