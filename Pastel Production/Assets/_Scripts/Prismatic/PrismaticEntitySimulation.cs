@@ -43,22 +43,6 @@ namespace Prismatic
             simulationData.currentEntity = simulationData.entities[0];
             Transition(currentStateType);
 
-
-
-            // Add prismatic entity to simulation
-            PrismaticEntity pe1 = new PrismaticEntity(Vector3.zero, Quaternion.identity, new HueMix(
-                new List<Color>
-                {
-                    Color.red, Color.blue, Color.green, Color.cyan, Color.magenta, Color.yellow
-                },
-                new List<int>
-                {
-                    1, 1, 1, 1, 1, 1
-                }
-            ));
-            simulationData.entities.Add(pe1);
-
-
         }
 
         public State GetState(StateType stateType)

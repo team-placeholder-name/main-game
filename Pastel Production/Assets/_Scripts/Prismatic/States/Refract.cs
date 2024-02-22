@@ -33,7 +33,7 @@ namespace Prismatic
 
         public override void Update(SimulationData data)
         {
-            if(data.currentEntity.HueMix.Weights.Sum() < 2)
+            if(data.currentEntity.HueMix.GetColorCount() < 2)
             {
                 Transition(StateType.Move);
             }
@@ -42,13 +42,9 @@ namespace Prismatic
             {
                 data.currentEntity.HueMix.RemoveColor(colorWheel.ChosenColor);
                 PrismaticEntity refraction = new PrismaticEntity(data.currentEntity.Position, data.currentEntity.Rotation, new HueMix(
-                    new List<Color>
-                    {
-                        colorWheel.ChosenColor
-                    },
-                    new List<int>
-                    {
-                        1
+                    new List<ColorWeight>
+                    { 
+                        new ColorWeight(colorWheel.ChosenColor,1)
                     }
                 ));
                 data.entities.Add(refraction);
@@ -60,7 +56,7 @@ namespace Prismatic
 
         public override void OnSelect(SimulationData simulationData)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
         public override void OnProject(SimulationData simulationData)

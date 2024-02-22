@@ -46,7 +46,7 @@ public class ColorWheel : MonoBehaviour
             Destroy(transform.GetChild(i).gameObject);
         }
         
-        List<Color> currentColors = currentEntity.HueMix.Colors;
+        List<Color> currentColors = currentEntity.HueMix.GetColors();
         int numColors = currentColors.Count;
 
         for(int i = 0; i < numColors; i++)

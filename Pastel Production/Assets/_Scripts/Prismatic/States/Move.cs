@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 namespace Prismatic
 {
     [System.Serializable]
@@ -81,6 +83,11 @@ namespace Prismatic
                 {
                     nextPosition = data.currentEntity.Position;
                 }
+            }
+            if(Physics.CheckSphere(nextPosition, 0.5f, 1 << LayerMask.NameToLayer("LevelEnd")))//TODO: Replace with a level end sequence
+            {
+                //Transition to next level
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
             
             Debug.DrawRay(data.currentEntity.Position, (nextPosition - data.currentEntity.Position).normalized, Color.red);
