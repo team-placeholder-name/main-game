@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Playtest/PT_Map4.unity
     guid: ca308ebb9c49de1458691433669956cb
+  - enabled: 1
+    path: Assets/Scenes/Playtest/End.unity
+    guid: 682501b287c22a24aa6ca518262878b7
   m_configObjects: {}
