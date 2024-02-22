@@ -13,8 +13,8 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
 {
     [SerializeField]
     private PrismaticEntitySimulation controlledSimulation;
-
-
+    [SerializeField]
+    Vector2 mouseSensitivity = new Vector2(0.3f, 0.1f);
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;   
@@ -36,7 +36,7 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
     /// <param name="value"></param>
     private void OnLook(InputValue value)
     {
-        controlledSimulation.OnMouseMove(value.Get<Vector2>());
+        controlledSimulation.OnMouseMove(Vector2.Scale(value.Get<Vector2>(),mouseSensitivity));
 
     }
 
