@@ -8,6 +8,11 @@ public class TitleScreenBehavior : MonoBehaviour
     public GameObject optionsMenu;
     public GameObject titleScreenUI;
 
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
     //Transitions to the Game Scene
     public void StartGame()
     {

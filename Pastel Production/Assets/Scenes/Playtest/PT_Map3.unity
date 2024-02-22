@@ -184,6 +184,11 @@ PrefabInstance:
     - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
         type: 3}
       propertyPath: simulationData.entities.Array.data[0].HueMix.colorWeights.Array.data[1].color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+        type: 3}
+      propertyPath: simulationData.entities.Array.data[0].HueMix.colorWeights.Array.data[1].color.g
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3580545130981308124, guid: aed412a9ef4f8e64983d749a9aecb7fd,
@@ -588,6 +593,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9615e0d5214efb44bb42ea82b37de627, type: 3}
+--- !u!114 &964494107 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 312101332}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1d6dd1e4a633ac46b73ba4a5b67f173, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1326539704
 GameObject:
   m_ObjectHideFlags: 0

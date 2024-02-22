@@ -314,6 +314,18 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &798706499 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1388481705}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1d6dd1e4a633ac46b73ba4a5b67f173, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1245518923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -326,7 +338,7 @@ PrefabInstance:
         type: 3}
       propertyPath: simulationTarget
       value: 
-      objectReference: {fileID: 1388481706}
+      objectReference: {fileID: 798706499}
     - target: {fileID: 4601092632931631448, guid: 73fb8e40ac864934d8227182503c72fa,
         type: 3}
       propertyPath: m_Pivot.x
@@ -667,18 +679,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aed412a9ef4f8e64983d749a9aecb7fd, type: 3}
---- !u!114 &1388481706 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 739844758233423123, guid: aed412a9ef4f8e64983d749a9aecb7fd,
-    type: 3}
-  m_PrefabInstance: {fileID: 1388481705}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1d6dd1e4a633ac46b73ba4a5b67f173, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1447679447
 PrefabInstance:
   m_ObjectHideFlags: 0

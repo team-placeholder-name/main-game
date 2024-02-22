@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Recieves messages from player input component, transforms the data if necessary, and then passes it to the controlled simulation
@@ -61,5 +61,9 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
     private void OnRefract(InputValue value)
     {
         controlledSimulation.OnRefract();
+    }
+    private void OnRestart(InputValue value)
+    {
+        SceneManager.LoadScene(0);
     }
 }
