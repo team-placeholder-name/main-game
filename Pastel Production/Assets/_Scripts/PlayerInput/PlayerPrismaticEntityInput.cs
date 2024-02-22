@@ -1,4 +1,5 @@
 using Prismatic;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,5 +56,10 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
     private void OnProject(InputValue value)
     {
         controlledSimulation.OnProject();
+    }
+
+    private void OnRefract(InputValue value)
+    {
+        controlledSimulation.OnRefract();
     }
 }

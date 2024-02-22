@@ -17,8 +17,8 @@ namespace Prismatic
         protected void Transition(StateType type)
         {
             transition.Invoke(type);
-            
         }
+
         /// <summary>
         /// Clears the transition delegate
         /// </summary>
@@ -45,6 +45,8 @@ namespace Prismatic
         public abstract void OnSelect(SimulationData simulationData);
 
         public abstract void OnProject(SimulationData simulationData);
+
+        public abstract void OnRefract(SimulationData simulationData);
 
     }
 }

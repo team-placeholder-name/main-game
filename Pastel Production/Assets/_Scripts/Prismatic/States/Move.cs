@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 namespace Prismatic
 {
     [System.Serializable]
@@ -36,11 +38,18 @@ namespace Prismatic
             viewForward = viewForward.normalized;
             Vector3 moveForward = Vector3.ProjectOnPlane(viewForward, movementNormal).normalized;
             Quaternion view = Quaternion.LookRotation(moveForward, Vector3.up);
+
+            
             Matrix4x4 transformMatrix = Matrix4x4.Rotate(view);
 
             Vector3 nextPosition = data.currentEntity.Position + (Vector3)(transformMatrix * new Vector3(movementInput.x, 0, movementInput.y) * Time.deltaTime * speed);
 
+            if (nextPosition != data.currentEntity.Position)
+            {
 
+                Vector3 movementVector = nextPosition - data.currentEntity.Position;
+                data.currentEntity.Rotation = Quaternion.LookRotation(movementVector, Vector3.up);
+            }
             //Check for walls blocking movment
             if (
             Physics.SphereCast(entityCenter,
@@ -74,6 +83,11 @@ namespace Prismatic
                 {
                     nextPosition = data.currentEntity.Position;
                 }
+            }
+            if(Physics.CheckSphere(nextPosition, 0.5f, 1 << LayerMask.NameToLayer("LevelEnd")))//TODO: Replace with a level end sequence
+            {
+                //Transition to next level
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
             
             Debug.DrawRay(data.currentEntity.Position, (nextPosition - data.currentEntity.Position).normalized, Color.red);
@@ -118,6 +132,11 @@ namespace Prismatic
         public override void OnProject(SimulationData simulationData)
         {
             Transition(StateType.Project);
+        }
+
+        public override void OnRefract(SimulationData simulationData)
+        {
+            Transition(StateType.Refract);
         }
     }
 
