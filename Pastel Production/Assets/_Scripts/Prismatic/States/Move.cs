@@ -112,7 +112,7 @@ namespace Prismatic
         {
             xAngle += mouseDelta.x;
             yAngle += mouseDelta.y;
-            yAngle = Mathf.Clamp(yAngle, -yAngleLimit*0.5f, yAngleLimit);
+            yAngle = Mathf.Clamp(yAngle, -yAngleLimit*0.55f, yAngleLimit);
            
         }
         public override void OnSelect(SimulationData data)
@@ -122,10 +122,12 @@ namespace Prismatic
 
         private void UpdateView(SimulationData data)
         {
-            float viewDistance = 5;
+            float viewDistance = 3;
+            Vector3 pivot = data.currentEntity.Position + Vector3.up * 2f;
+  
             Vector3 offset = Quaternion.AngleAxis(xAngle, Vector3.up) * Quaternion.AngleAxis(yAngle, Vector3.right) * Vector3.back*viewDistance;
-            data.ViewPosition = data.currentEntity.Position + offset;
-            data.ViewTarget = data.currentEntity.Position;
+            data.ViewPosition = pivot + offset;
+            data.ViewTarget = pivot;
             data.XYAngles = new Vector2(xAngle, yAngle);
         }
 

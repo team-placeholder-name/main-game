@@ -8,7 +8,10 @@ public class HueBarrier : MonoBehaviour
     public HueMix hue;
     private void Awake()
     {
-        GetComponent<Renderer>().material.color = hue.Color;
+        Color color = hue.Color;
+        color.a*= 0.5f;
+        GetComponent<Renderer>().material.color = color;
+
     }
     private void OnDrawGizmos()
     {

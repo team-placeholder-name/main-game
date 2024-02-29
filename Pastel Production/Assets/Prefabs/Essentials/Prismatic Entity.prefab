@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlledSimulation: {fileID: 739844758233423123}
+  mouseSensitivity: {x: 0.3, y: 0.1}
 --- !u!1 &5299604942455343589
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +250,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simulationData:
-    entities: []
+    entities:
+    - Position: {x: 0, y: 0, z: 0}
+      Rotation: {x: 0, y: 0, z: 0, w: 0}
+      HueMix:
+        colorWeights:
+        - color: {r: 1, g: 0, b: 0, a: 1}
+          weight: 1
+        - color: {r: 0, g: 0, b: 1, a: 1}
+          weight: 1
+        - color: {r: 0, g: 1, b: 1, a: 1}
+          weight: 1
     currentEntity:
       Position: {x: 0, y: 0, z: 0}
       Rotation: {x: 0, y: 0, z: 0, w: 0}
