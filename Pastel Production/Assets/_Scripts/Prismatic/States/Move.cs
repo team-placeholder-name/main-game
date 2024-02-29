@@ -123,8 +123,8 @@ namespace Prismatic
 
         private void UpdateView(SimulationData data)
         {
-            data.ViewPosition = CameraUtility.CalculateEyeLevel(data, viewDistance, viewHeight);
-            data.ViewTarget = CameraUtility.CalculateLookAtDirection(data, viewHeight);
+            data.ViewPosition = CameraUtility.CalculateLookAtDirection(data, viewDistance, viewHeight);
+            data.ViewTarget = CameraUtility.CalculateEyeLevel(data, viewHeight);
             data.XYAngles = new Vector2(xAngle, yAngle);
         }
 
