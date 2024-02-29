@@ -10,6 +10,8 @@ namespace Prismatic
         [SerializeField]
         private Reticule reticule;
         private float targetRange;
+        private float viewHeight = 2.0f;
+        private float viewDistance = 3.0f;
         private float xAngle, yAngle;
         private float yAngleLimit;
 
@@ -39,7 +41,6 @@ namespace Prismatic
 
             float smallestAngle = Mathf.Infinity;
             PrismaticEntity targetEntity = null;
-            Debug.Log("Projecting");
 
 
             //loop through all entities and find the one with the smallest angle to the player's view
@@ -94,12 +95,8 @@ namespace Prismatic
 
         private void UpdateView(SimulationData data)
         {
-            float viewDistance = 3;
-            Vector3 pivot = data.currentEntity.Position + Vector3.up * 2f;
-
-            Vector3 offset = Quaternion.AngleAxis(xAngle, Vector3.up) * Quaternion.AngleAxis(yAngle, Vector3.right) * Vector3.back * viewDistance;
-            data.ViewPosition = pivot + offset;
-            data.ViewTarget = pivot;
+            data.ViewPosition = CameraUtility.CalculateEyeLevel(data, viewDistance, viewHeight);
+            data.ViewTarget = CameraUtility.CalculateLookAtDirection(data, viewHeight);
             data.XYAngles = new Vector2(xAngle, yAngle);
         }
 

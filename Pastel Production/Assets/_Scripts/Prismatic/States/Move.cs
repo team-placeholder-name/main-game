@@ -13,6 +13,9 @@ namespace Prismatic
         private Vector2 movementInput = Vector2.zero;
         [SerializeField]
         private float speed = 5.0f;
+        private float viewHeight = 2.0f;
+        private float viewDistance = 3.0f;
+
         private float xAngle, yAngle;
         private float yAngleLimit;
 
@@ -30,8 +33,6 @@ namespace Prismatic
             Vector3 entityCenter = data.currentEntity.Position + Vector3.up * 0.5f;
             Physics.Raycast(entityCenter, Vector3.down, out RaycastHit hit, groundDistance, 1 << LayerMask.NameToLayer("Default"));
             Vector3 movementNormal = hit.normal;
-
-
 
             Vector3 viewForward = (data.ViewTarget - data.ViewPosition);
             viewForward.y = 0;
@@ -122,12 +123,8 @@ namespace Prismatic
 
         private void UpdateView(SimulationData data)
         {
-            float viewDistance = 3;
-            Vector3 pivot = data.currentEntity.Position + Vector3.up * 2f;
-  
-            Vector3 offset = Quaternion.AngleAxis(xAngle, Vector3.up) * Quaternion.AngleAxis(yAngle, Vector3.right) * Vector3.back*viewDistance;
-            data.ViewPosition = pivot + offset;
-            data.ViewTarget = pivot;
+            data.ViewPosition = CameraUtility.CalculateEyeLevel(data, viewDistance, viewHeight);
+            data.ViewTarget = CameraUtility.CalculateLookAtDirection(data, viewHeight);
             data.XYAngles = new Vector2(xAngle, yAngle);
         }
 
