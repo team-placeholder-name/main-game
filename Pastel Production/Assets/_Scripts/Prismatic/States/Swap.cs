@@ -45,8 +45,7 @@ namespace Prismatic
         public override void OnMouseMove(Vector2 mouseDelta)
         {
             xAngle += mouseDelta.x;
-            yAngle += mouseDelta.y;
-            yAngle = Mathf.Clamp(yAngle, -yAngleLimit * 0.55f, yAngleLimit);
+            yAngle = CameraUtility.AdjustVerticalAngle(mouseDelta.y, yAngle, yAngleLimit);
 
         }
 

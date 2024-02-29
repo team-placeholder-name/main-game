@@ -14,4 +14,9 @@ public static class CameraUtility
     {
         return data.currentEntity.Position + Vector3.up * height;
     }
+
+    public static float AdjustVerticalAngle(float change, float current, float max)
+    {
+        return Mathf.Clamp(current + change, -0.55f * max, max);
+    }
 }
