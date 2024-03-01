@@ -13,6 +13,9 @@ namespace Prismatic
         private Vector2 movementInput = Vector2.zero;
         [SerializeField]
         private float speed = 5.0f;
+        private float viewHeight = 2.0f;
+        private float viewDistance = 3.0f;
+
         private float xAngle, yAngle;
         private float yAngleLimit;
 
@@ -28,20 +31,8 @@ namespace Prismatic
         {
             float groundDistance = 0.6f;
             Vector3 entityCenter = data.currentEntity.Position + Vector3.up * 0.5f;
-            Physics.Raycast(entityCenter, Vector3.down, out RaycastHit hit, groundDistance, 1 << LayerMask.NameToLayer("Default"));
-            Vector3 movementNormal = hit.normal;
-
-
-
-            Vector3 viewForward = (data.ViewTarget - data.ViewPosition);
-            viewForward.y = 0;
-            viewForward = viewForward.normalized;
-            Vector3 moveForward = Vector3.ProjectOnPlane(viewForward, movementNormal).normalized;
-            Quaternion view = Quaternion.LookRotation(moveForward, Vector3.up);
-
-            
+            Quaternion view = CameraUtility.GetView(data, entityCenter, groundDistance);
             Matrix4x4 transformMatrix = Matrix4x4.Rotate(view);
-
             Vector3 nextPosition = data.currentEntity.Position + (Vector3)(transformMatrix * new Vector3(movementInput.x, 0, movementInput.y) * Time.deltaTime * speed);
 
             if (nextPosition != data.currentEntity.Position)
@@ -55,7 +46,7 @@ namespace Prismatic
             Physics.SphereCast(entityCenter,
                                 0.4f,
                                 nextPosition - data.currentEntity.Position,
-                                out hit,
+                                out RaycastHit hit,
                                 (nextPosition - data.currentEntity.Position).magnitude,
                                 1 << LayerMask.NameToLayer("Default"))
             )
@@ -66,6 +57,7 @@ namespace Prismatic
             if (Physics.SphereCast(nextPosition + Vector3.up * 0.6f, 0.5f, Vector3.down, out hit, groundDistance, 1 << LayerMask.NameToLayer("Default")))
             {
                 //snap the character to the ground
+                // Ed: Do we want to add a bounciness to the slime? Would this impede that?
                 nextPosition.y = hit.point.y;
 
             }
@@ -110,9 +102,8 @@ namespace Prismatic
 
         public override void OnMouseMove(Vector2 mouseDelta)
         {
-            xAngle += mouseDelta.x;
-            yAngle += mouseDelta.y;
-            yAngle = Mathf.Clamp(yAngle, -yAngleLimit*0.55f, yAngleLimit);
+            xAngle = CameraUtility.AdjustAngle(mouseDelta.x, xAngle, 90);
+            yAngle = CameraUtility.AdjustAngle(mouseDelta.y, yAngle, yAngleLimit);
            
         }
         public override void OnSelect(SimulationData data)
@@ -122,12 +113,8 @@ namespace Prismatic
 
         private void UpdateView(SimulationData data)
         {
-            float viewDistance = 3;
-            Vector3 pivot = data.currentEntity.Position + Vector3.up * 2f;
-  
-            Vector3 offset = Quaternion.AngleAxis(xAngle, Vector3.up) * Quaternion.AngleAxis(yAngle, Vector3.right) * Vector3.back*viewDistance;
-            data.ViewPosition = pivot + offset;
-            data.ViewTarget = pivot;
+            data.ViewPosition = CameraUtility.CalculateLookAtDirection(data, viewDistance, viewHeight);
+            data.ViewTarget = CameraUtility.CalculateEyeLevel(data, viewHeight);
             data.XYAngles = new Vector2(xAngle, yAngle);
         }
 

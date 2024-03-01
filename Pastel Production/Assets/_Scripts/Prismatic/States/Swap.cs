@@ -8,6 +8,8 @@ namespace Prismatic
     {
         [SerializeField]
         private Reticule reticule;
+        private float viewDistance =  3.0f;
+        private float viewHeight = 2.0f;
         private float xAngle, yAngle;
         private float yAngleLimit;
 
@@ -42,9 +44,8 @@ namespace Prismatic
 
         public override void OnMouseMove(Vector2 mouseDelta)
         {
-            xAngle += mouseDelta.x;
-            yAngle += mouseDelta.y;
-            yAngle = Mathf.Clamp(yAngle, -yAngleLimit * 0.55f, yAngleLimit);
+            xAngle = CameraUtility.AdjustAngle(mouseDelta.x, xAngle, 0);
+            yAngle = CameraUtility.AdjustAngle(mouseDelta.y, yAngle, yAngleLimit);
 
         }
 
@@ -86,12 +87,8 @@ namespace Prismatic
 
         private void UpdateView(SimulationData data)
         {
-            float viewDistance = 3;
-            Vector3 pivot = data.currentEntity.Position + Vector3.up * 2f;
-
-            Vector3 offset = Quaternion.AngleAxis(xAngle, Vector3.up) * Quaternion.AngleAxis(yAngle, Vector3.right) * Vector3.back * viewDistance;
-            data.ViewPosition = pivot + offset;
-            data.ViewTarget = pivot;
+            data.ViewPosition = CameraUtility.CalculateLookAtDirection(data, viewDistance, viewHeight);
+            data.ViewTarget = CameraUtility.CalculateEyeLevel(data, viewDistance);
             data.XYAngles = new Vector2(xAngle, yAngle);
         }
 
