@@ -33,7 +33,25 @@ namespace Prismatic
             float entityRadius = 0.5f;
             float groundDistance = 0.6f;
             Vector3 entityCenter = data.currentEntity.Position + Vector3.up * 0.5f;
-            Quaternion view = CameraUtility.GetView(data, entityCenter, groundDistance);
+
+
+            Physics.SphereCast(entityCenter+ Vector3.up*entityRadius, entityRadius, Vector3.down, out RaycastHit hit, groundDistance+entityRadius, 1 << LayerMask.NameToLayer("Default"));
+            Vector3 movementNormal = hit.normal;
+
+            Vector3 viewForward = Vector3.ProjectOnPlane(data.ViewTarget - data.ViewPosition,Vector3.up).normalized;
+
+            Plane movePlane = new Plane(entityCenter, entityCenter+viewForward, entityCenter+Vector3.up);
+            //get the line the player is moving on
+            Vector3 moveLine = Vector3.Cross(movementNormal,movePlane.normal);
+            
+            
+            //Vector3 moveForward = Vector3.ProjectOnPlane(viewForward, movementNormal).normalized;
+            Quaternion view= Quaternion.LookRotation(moveLine,movementNormal);
+             //= CameraUtility.GetView(data, entityCenter, groundDistance);
+
+
+
+
             Matrix4x4 transformMatrix = Matrix4x4.Rotate(view);
             Vector3 nextPosition = data.currentEntity.Position + (Vector3)(transformMatrix * new Vector3(movementInput.x, 0, movementInput.y) * Time.deltaTime * speed);
 
@@ -62,7 +80,7 @@ namespace Prismatic
                 nextPosition + Vector3.up * (stepHeight + entityRadius), 
                 entityRadius, 
                 Vector3.down, 
-                out RaycastHit hit, 
+                out hit, 
                 stepHeight * 2, collisionLayer))
             {
                 nextGround.y = hit.point.y;
@@ -73,12 +91,14 @@ namespace Prismatic
                 nextGround.y -= 10 * Time.deltaTime;
             }
 
-            if (Physics.OverlapSphere(nextGround + Vector3.up * entityRadius, entityRadius,collisionLayer).Length == 0)
+            if (Physics.OverlapSphere(nextGround + Vector3.up * (entityRadius+0.01f), entityRadius,collisionLayer).Length == 0)
             {
+                
                 nextPosition = nextGround;
             }
             else
             {
+                Debug.Log("BBlocked");
                 nextPosition = data.currentEntity.Position;
             }
 
