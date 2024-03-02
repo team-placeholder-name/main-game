@@ -1,13 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Prismatic
 {
 
-    public enum StateType { Move, Swap, Refract, Project }//not sure were best to put this
+    public enum StateType { Move, Shift, Merge }//not sure were best to put this
 
     public class PrismaticEntitySimulation : MonoBehaviour
     {
@@ -15,9 +13,8 @@ namespace Prismatic
         //Hacky workaround to utilize serialize properties
         public ReadOnlySimulationData SimulationData { get => simulationData.readOnlyData; }
         public Move Move { get => move; }
-        public Swap Swap { get => swap; }
-        public Refract Refract { get => refract; }
-        public Project Project { get => project; }
+        public Shift Shift { get => shift; }
+        public Merge Merge { get => merge; }
         public StateType CurrentState { get => currentStateType; }
 
         [SerializeField]
@@ -26,23 +23,20 @@ namespace Prismatic
         [SerializeField]
         private Move move;
         [SerializeField]
-        private Swap swap;
+        private Shift shift;
         [SerializeField]
-        private Refract refract;
-        [SerializeField]
-        private Project project;
+        private Merge merge;
+
 
 
         [SerializeField]
         private StateType currentStateType;
 
-        
-
         private void Awake()
         {
+
             simulationData.currentEntity = simulationData.entities[0];
             Transition(currentStateType);
-
         }
 
         public State GetState(StateType stateType)
@@ -51,12 +45,10 @@ namespace Prismatic
             {
                 case StateType.Move:
                     return move;
-                case StateType.Swap:
-                    return swap;
-                case StateType.Refract:
-                    return refract;
-                case StateType.Project:
-                    return project;
+                case StateType.Shift:
+                    return shift;
+                case StateType.Merge:
+                    return merge;
                 default:
                     return null;
             }
@@ -87,19 +79,16 @@ namespace Prismatic
         {
             GetState(currentStateType).OnMouseMove(movementInput);
         }
-        public void OnSelect()
+
+        public void OnMerge()
         {
-            GetState(currentStateType).OnSelect(simulationData);
+            GetState(currentStateType).OnMerge(simulationData);
         }
-        public void OnProject()
+        public void OnShift()
         {
-            GetState(currentStateType).OnProject(simulationData);
+            GetState(currentStateType).OnShift(simulationData);
         }
 
-        public void OnRefract()
-        {
-            GetState(currentStateType).OnRefract(simulationData);
-        }
     }
 
 

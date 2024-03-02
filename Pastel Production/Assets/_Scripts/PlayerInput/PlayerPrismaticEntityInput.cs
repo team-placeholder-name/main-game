@@ -14,7 +14,7 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
     [SerializeField]
     private PrismaticEntitySimulation controlledSimulation;
     [SerializeField]
-    Vector2 mouseSensitivity = new Vector2(0.3f, 0.1f);
+    Vector2 mouseSensitivity = new Vector2(0.3f, -0.1f);
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;   
@@ -44,23 +44,17 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
     /// Called with Unity's Send Message system from Player Input
     /// </summary>
     /// <param name="value"></param>
-    private void OnSelect(InputValue value)
+    private void OnMerge(InputValue value)
     {
-        controlledSimulation.OnSelect();
+        controlledSimulation.OnMerge();
     }
-
     /// <summary>
     /// Called with Unity's Send Message system from Player Input
     /// </summary>
     /// <param name="value"></param>
-    private void OnProject(InputValue value)
+    private void OnShift(InputValue value)
     {
-        controlledSimulation.OnProject();
-    }
-
-    private void OnRefract(InputValue value)
-    {
-        controlledSimulation.OnRefract();
+        controlledSimulation.OnShift();
     }
     private void OnRestart(InputValue value)
     {

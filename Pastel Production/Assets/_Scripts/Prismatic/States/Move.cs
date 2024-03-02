@@ -106,10 +106,6 @@ namespace Prismatic
             yAngle = CameraUtility.AdjustAngle(mouseDelta.y, yAngle, yAngleLimit);
            
         }
-        public override void OnSelect(SimulationData data)
-        {
-            Transition(StateType.Swap);
-        }
 
         private void UpdateView(SimulationData data)
         {
@@ -118,14 +114,14 @@ namespace Prismatic
             data.XYAngles = new Vector2(xAngle, yAngle);
         }
 
-        public override void OnProject(SimulationData simulationData)
+        public override void OnMerge(SimulationData simulationData)
         {
-            Transition(StateType.Project);
+            Transition(StateType.Merge);
         }
 
-        public override void OnRefract(SimulationData simulationData)
+        public override void OnShift(SimulationData simulationData)
         {
-            Transition(StateType.Refract);
+            Transition(StateType.Shift);
         }
     }
 

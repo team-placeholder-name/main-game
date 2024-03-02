@@ -21,6 +21,7 @@ public static class CameraUtility
         {
             return current + change;
         }
+        
         return Mathf.Clamp(current + change, -0.55f * max, max);
     }
 

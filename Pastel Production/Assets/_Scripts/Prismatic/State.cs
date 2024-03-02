@@ -42,11 +42,10 @@ namespace Prismatic
         public abstract void OnMoveInput(Vector2 movementInput);
         public abstract void OnMouseMove(Vector2 mousePos);
 
-        public abstract void OnSelect(SimulationData simulationData);
+        public abstract void OnShift(SimulationData simulationData);
 
-        public abstract void OnProject(SimulationData simulationData);
+        public abstract void OnMerge(SimulationData simulationData);
 
-        public abstract void OnRefract(SimulationData simulationData);
 
     }
 }
