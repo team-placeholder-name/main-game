@@ -11,6 +11,8 @@ public class CreateRender : MonoBehaviour
     RawImage input;
 
     RenderTexture renderTexture;
+
+    Texture2D mask; 
     // Start is called before the first frame update
     void Start()
     {

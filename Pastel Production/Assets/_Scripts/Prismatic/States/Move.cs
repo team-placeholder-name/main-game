@@ -33,33 +33,22 @@ namespace Prismatic
             float entityRadius = 0.5f;
             float groundDistance = 0.6f;
             Vector3 entityCenter = data.currentEntity.Position + Vector3.up * 0.5f;
-
+            Vector3 moveInput = new Vector3(movementInput.x, 0, movementInput.y);
 
             Physics.SphereCast(entityCenter+ Vector3.up*entityRadius, entityRadius, Vector3.down, out RaycastHit hit, groundDistance+entityRadius, 1 << LayerMask.NameToLayer("Default"));
             Vector3 movementNormal = hit.normal;
 
             Vector3 viewForward = Vector3.ProjectOnPlane(data.ViewTarget - data.ViewPosition,Vector3.up).normalized;
+            Vector3 moveForward =Quaternion.LookRotation(viewForward, Vector3.up)*moveInput;
+            Plane movePlane = new Plane(entityCenter, entityCenter+moveForward, entityCenter+Vector3.up);
+            Vector3 moveLine = Vector3.Cross(movementNormal,movePlane.normal).normalized;
 
-            Plane movePlane = new Plane(entityCenter, entityCenter+viewForward, entityCenter+Vector3.up);
-            //get the line the player is moving on
-            Vector3 moveLine = Vector3.Cross(movementNormal,movePlane.normal);
-            
-            
-            //Vector3 moveForward = Vector3.ProjectOnPlane(viewForward, movementNormal).normalized;
-            Quaternion view= Quaternion.LookRotation(moveLine,movementNormal);
-             //= CameraUtility.GetView(data, entityCenter, groundDistance);
-
-
-
-
-            Matrix4x4 transformMatrix = Matrix4x4.Rotate(view);
-            Vector3 nextPosition = data.currentEntity.Position + (Vector3)(transformMatrix * new Vector3(movementInput.x, 0, movementInput.y) * Time.deltaTime * speed);
+            Vector3 moveDelta = moveLine * Time.deltaTime * speed;
+            Vector3 nextPosition = data.currentEntity.Position + moveDelta;
 
             if (nextPosition != data.currentEntity.Position)
             {
-
-                Vector3 movementVector = nextPosition - data.currentEntity.Position;
-                data.currentEntity.Rotation = Quaternion.LookRotation(movementVector, Vector3.up);
+                data.currentEntity.Rotation = Quaternion.LookRotation(moveDelta.normalized, movementNormal);
             }
 
             int collisionLayer = 1 << LayerMask.NameToLayer("Default");
