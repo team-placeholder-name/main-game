@@ -29,6 +29,8 @@ namespace Prismatic
 
         private void UpdatePosition(SimulationData data)
         {
+            float stepHeight=0.5f;
+            float entityRadius = 0.5f;
             float groundDistance = 0.6f;
             Vector3 entityCenter = data.currentEntity.Position + Vector3.up * 0.5f;
             Quaternion view = CameraUtility.GetView(data, entityCenter, groundDistance);
@@ -41,42 +43,47 @@ namespace Prismatic
                 Vector3 movementVector = nextPosition - data.currentEntity.Position;
                 data.currentEntity.Rotation = Quaternion.LookRotation(movementVector, Vector3.up);
             }
-            //Check for walls blocking movment
-            if (
-            Physics.SphereCast(entityCenter,
-                                0.4f,
-                                nextPosition - data.currentEntity.Position,
-                                out RaycastHit hit,
-                                (nextPosition - data.currentEntity.Position).magnitude,
-                                1 << LayerMask.NameToLayer("Default"))
-            )
-            {
-                nextPosition = data.currentEntity.Position;
-            }
 
-            if (Physics.SphereCast(nextPosition + Vector3.up * 0.6f, 0.5f, Vector3.down, out hit, groundDistance, 1 << LayerMask.NameToLayer("Default")))
-            {
-                //snap the character to the ground
-                // Ed: Do we want to add a bounciness to the slime? Would this impede that?
-                nextPosition.y = hit.point.y;
+            int collisionLayer = 1 << LayerMask.NameToLayer("Default");
 
-            }
-            if (!Physics.Raycast(nextPosition + Vector3.up * 0.5f, Vector3.down, 1, 1 << LayerMask.NameToLayer("Default")))
-            {
-                //check if the next position is a valid ground position
-                nextPosition = data.currentEntity.Position;
-            }
 
             //Check if next position is within a HueBarrier
             Collider[] hueBarriers = Physics.OverlapSphere(nextPosition, 0.5f, 1 << LayerMask.NameToLayer("HueBarrier"));
-            if(hueBarriers.Length>0)
+            if (hueBarriers.Length > 0)
             {
                 if (hueBarriers[0].gameObject.GetComponent<HueBarrier>().hue != data.currentEntity.HueMix)
                 {
-                    nextPosition = data.currentEntity.Position;
+                    collisionLayer = (1 << LayerMask.NameToLayer("Default")) + (1 << LayerMask.NameToLayer("HueBarrier"));
                 }
             }
-            if(Physics.CheckSphere(nextPosition, 0.5f, 1 << LayerMask.NameToLayer("LevelEnd")))//TODO: Replace with a level end sequence
+            //check for a walkable sufrace
+            Vector3 nextGround= nextPosition;
+            if (Physics.SphereCast(
+                nextPosition + Vector3.up * (stepHeight + entityRadius), 
+                entityRadius, 
+                Vector3.down, 
+                out RaycastHit hit, 
+                stepHeight * 2, collisionLayer))
+            {
+                nextGround.y = hit.point.y;
+            }
+            else
+            {
+                //falling
+                nextGround.y -= 10 * Time.deltaTime;
+            }
+
+            if (Physics.OverlapSphere(nextGround + Vector3.up * entityRadius, entityRadius,collisionLayer).Length == 0)
+            {
+                nextPosition = nextGround;
+            }
+            else
+            {
+                nextPosition = data.currentEntity.Position;
+            }
+
+            //TODO: Replace with a level end sequence
+            if (Physics.CheckSphere(nextPosition, 0.5f, 1 << LayerMask.NameToLayer("LevelEnd")))
             {
                 //Transition to next level
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
