@@ -15,7 +15,8 @@ namespace Prismatic
         private float speed = 5.0f;
         private float viewHeight = 2.0f;
         private float viewDistance = 3.0f;
-
+        [SerializeField] // Here while we tune in the best-feeling value for this, then we can remove this from the inspector
+        private float turnSpeedInRadians = 0.5f; 
         private float xAngle, yAngle;
         private float yAngleLimit;
 
@@ -39,12 +40,21 @@ namespace Prismatic
             Vector3 movementNormal = hit.normal;
 
             Vector3 viewForward = Vector3.ProjectOnPlane(data.ViewTarget - data.ViewPosition,Vector3.up).normalized;
-            Vector3 moveForward =Quaternion.LookRotation(viewForward, Vector3.up)*moveInput;
+            Vector3 moveForward = Quaternion.LookRotation(viewForward, Vector3.up)*moveInput;
             Plane movePlane = new Plane(entityCenter, entityCenter+moveForward, entityCenter+Vector3.up);
             Vector3 moveLine = Vector3.Cross(movementNormal,movePlane.normal).normalized;
 
             Vector3 moveDelta = moveLine * Time.deltaTime * speed;
             Vector3 nextPosition = data.currentEntity.Position + moveDelta;
+
+
+            // See if the camera has to rotate to keep up with the player changing direction
+            float dot_prod = Vector3.Dot(viewForward, moveForward.normalized);
+            bool turning = dot_prod < 0.75f && dot_prod > -0.75f && moveForward.magnitude > 0;
+            if (turning)
+            {
+                xAngle += turnSpeedInRadians * movementInput.x;
+            }
 
             if (nextPosition != data.currentEntity.Position)
             {
@@ -118,7 +128,7 @@ namespace Prismatic
 
         public override void OnMouseMove(Vector2 mouseDelta)
         {
-            xAngle = CameraUtility.AdjustAngle(mouseDelta.x, xAngle, 90);
+            xAngle += mouseDelta.x;
             yAngle = CameraUtility.AdjustAngle(mouseDelta.y, yAngle, yAngleLimit);
            
         }
