@@ -10,39 +10,62 @@ using UnityEngine.UI;
 [System.Serializable]
 public class ShiftUIGen
 {
+    //The use of prefabs is problematic because they serve no utility. 
+    //There is no reason we would want to edit this prefab so exposing this information opens up unessesary organizational overhead
     [SerializeField]
-    GameObject SwapCamDisplayPrefab;
+    GameObject SwapUIPrefab;
+    [SerializeField]
+    GameObject SplitUIPrefab;
+
     [SerializeField]
     Canvas targetCanvas;
-    [SerializeField]
-    List<SwapCamDisplay> swapCamDisplays;
-    SwapCamDisplay centerDisplay;
+
+    List<SwapUI> swapUIs;
+    List<SplitUI> splitUIs;
+    SwapUI centerDisplay;
 
     public void DisplayUI(PrismaticEntity controlledEntity, ReadOnlyCollection<PrismaticEntity> prismaticEntitys, List<GameObject> entityModels)
     {
-        swapCamDisplays = new List<SwapCamDisplay>();
+        float centerRadius = Screen.height / 4.5f;
+        float outerRadius = Screen.height / 3.5f;
+        //Split is the color slices around the center circle
+        splitUIs = new List<SplitUI>();
+        for(int i = 0; i< controlledEntity.HueMix.Colors.Count; i++)
+        {
+            splitUIs.Add(SplitUI.CreateSplitUI(SplitUIPrefab, targetCanvas.transform, controlledEntity.HueMix.Colors[i].color));
+        }
+
+        float cellSize = 360 / (splitUIs.Count);
+        float startAngle = cellSize / 3;
+        for (int i = 0; i < splitUIs.Count; i++)
+        {
+            splitUIs[i].GenerateCutoutSlice(startAngle + 0 + cellSize * i, startAngle + cellSize + cellSize * i, centerRadius, outerRadius);
+        }
+
+        //Swap is the cameras around the splits
+        swapUIs = new List<SwapUI>();
         for (int i = 0; i < prismaticEntitys.Count; i++)
         {
             if (prismaticEntitys[i] != controlledEntity)
             {
                 if (entityModels[i].activeInHierarchy)
                 {
-                    swapCamDisplays.Add(SwapCamDisplay.CreateSwapCamDisplay(SwapCamDisplayPrefab, targetCanvas.transform, entityModels[i].GetComponentInChildren<Camera>()));
+                    swapUIs.Add(SwapUI.CreateSwapUI(SwapUIPrefab, targetCanvas.transform, entityModels[i].GetComponentInChildren<Camera>()));
                 }
             }
             else
             {
-                centerDisplay = SwapCamDisplay.CreateSwapCamDisplay(SwapCamDisplayPrefab, targetCanvas.transform, entityModels[i].GetComponentInChildren<Camera>());
+                centerDisplay = SwapUI.CreateSwapUI(SwapUIPrefab, targetCanvas.transform, entityModels[i].GetComponentInChildren<Camera>());
             }
         }
 
 
-        float cellSize = 360 / (swapCamDisplays.Count);
-        float startAngle = cellSize / 2;
-        centerDisplay.GenerateCircleCutout(Screen.height / 4.2f);
-        for (int i = 0; i < swapCamDisplays.Count; i++)
+        cellSize = 360 / (swapUIs.Count);
+        startAngle = cellSize / 2;
+        centerDisplay.GenerateCircleCutout(centerRadius);
+        for (int i = 0; i < swapUIs.Count; i++)
         {
-            swapCamDisplays[i].GenerateCutoutSlice(startAngle + 0 + cellSize * i, startAngle + cellSize + cellSize * i, Screen.height / 4);
+            swapUIs[i].GenerateCutoutSlice(startAngle + 0 + cellSize * i, startAngle + cellSize + cellSize * i, outerRadius);
         }
     }
 

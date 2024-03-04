@@ -5,25 +5,20 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class SwapCamDisplay : MonoBehaviour
+public class SwapUI : MonoBehaviour
 {
     [SerializeField]
     Camera rtInput;
     [SerializeField]
     RawImage rtOutput;
     [SerializeField]
-    RawImage maskImage;
+    RawImage mask;
 
-
-    public Camera GetRTInput() { return rtInput; }
-    public RawImage GetRTOutput() { return rtOutput; }
-    public RawImage GetMaskImage() { return maskImage; }
-    
 
     //factory
-    public static SwapCamDisplay CreateSwapCamDisplay(GameObject swapCamDisplayPrefab, Transform parent, Camera input)
+    public static SwapUI CreateSwapUI(GameObject swapCamDisplayPrefab, Transform parent, Camera input)
     {
-        SwapCamDisplay swapCamDisplay = Instantiate(swapCamDisplayPrefab, parent).GetComponent<SwapCamDisplay>();
+        SwapUI swapCamDisplay = Instantiate(swapCamDisplayPrefab, parent).GetComponent<SwapUI>();
         swapCamDisplay.rtInput = input;
         return swapCamDisplay;
     }
@@ -45,8 +40,8 @@ public class SwapCamDisplay : MonoBehaviour
 
 
         generateMask = new Texture2D(Screen.width, Screen.height, TextureFormat.RGBA32, false);
-        maskImage.texture = generateMask;
-        maskImage.color = Color.white;
+        mask.texture = generateMask;
+        mask.color = Color.white;
 
         // RGBA32 texture format data layout exactly matches Color32 struct
         NativeArray<Color32> data = generateMask.GetRawTextureData<Color32>();
@@ -82,8 +77,8 @@ public class SwapCamDisplay : MonoBehaviour
 
 
         generateMask = new Texture2D(Screen.width, Screen.height, TextureFormat.RGBA32, false);
-        maskImage.texture = generateMask;
-        maskImage.color = Color.white;
+        mask.texture = generateMask;
+        mask.color = Color.white;
 
         // RGBA32 texture format data layout exactly matches Color32 struct
         NativeArray<Color32> data = generateMask.GetRawTextureData<Color32>();

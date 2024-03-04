@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 521136419000675011}
   - component: {fileID: 7032047948331042007}
   m_Layer: 5
-  m_Name: SwapCamDisplay
+  m_Name: SwapUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rtInput: {fileID: 0}
   rtOutput: {fileID: 2165143627578372497}
-  maskImage: {fileID: 8883322940019225130}
+  mask: {fileID: 8883322940019225130}
 --- !u!1 &5404919437413592028
 GameObject:
   m_ObjectHideFlags: 0
