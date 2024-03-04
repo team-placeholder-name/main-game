@@ -15,8 +15,8 @@ namespace Prismatic
         private float speed = 5.0f;
         private float viewHeight = 2.0f;
         private float viewDistance = 3.0f;
-        [SerializeField]
-        private float turnSpeedInRadians = 0.5f;
+        [SerializeField] // Here while we tune in the best-feeling value for this, then we can remove this from the inspector
+        private float turnSpeedInRadians = 0.5f; 
         private float xAngle, yAngle;
         private float yAngleLimit;
 
