@@ -14,8 +14,21 @@ namespace Prismatic
         [SerializeField]
         private GameObject EntityModel;
 
-        private List<GameObject> entityModels = new List<GameObject>();
+        [SerializeField]
+        ShiftUIGen shiftUIGen;
 
+        public List<GameObject> entityModels = new List<GameObject>();
+
+
+        private void Start()
+        {
+            StartCoroutine(StartDisplay());
+        }
+        IEnumerator StartDisplay()
+        {
+            yield return new WaitForSeconds(0.5f);
+            shiftUIGen.DisplayUI(simulationTarget.SimulationData.currentEntity, simulationTarget.SimulationData.Entities, entityModels);
+        }
         private void LateUpdate()
         {
             SimpleEntityUpdate();
