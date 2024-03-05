@@ -26,6 +26,7 @@ namespace Prismatic
         }
         IEnumerator StartDisplay()
         {
+            shiftUIGen.SetUp();
             yield return new WaitForSeconds(0.5f);
             shiftUIGen.DisplayUI(simulationTarget.SimulationData.currentEntity, simulationTarget.SimulationData.Entities, entityModels);
         }

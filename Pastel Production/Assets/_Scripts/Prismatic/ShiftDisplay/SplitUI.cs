@@ -14,21 +14,27 @@ public class SplitUI : MonoBehaviour
 
 
     //factory
-    public static SplitUI CreateSplitUI(GameObject splitUIPrefab, Transform parent, Color color)
+    public static SplitUI CreateSplitUI(GameObject splitUIPrefab, Transform parent)
     {
         SplitUI splitUI = Instantiate(splitUIPrefab, parent).GetComponent<SplitUI>();
-        splitUI.image.color = color;
         return splitUI;
     }
 
+    
+
     //TODO: Refactor the shared logic into a seperate function
-    public void GenerateCutoutSlice(float angle1, float angle2, float centerRadius, float outerRadius)
+    public void GenerateCutoutSlice(Color color, SelectionRegion region)
     {
-        Vector2 center = new Vector2(Screen.width / 2, Screen.height / 2);
+        int width = Screen.width;
+        int height = Screen.height;
+
+        image.color = color;
+
+        
 
         Texture2D generateMask;
 
-        generateMask = new Texture2D(Screen.width, Screen.height, TextureFormat.RGBA32, false);
+        generateMask = new Texture2D(width, height, TextureFormat.RGBA32, false);
         mask.texture = generateMask;
         mask.color = Color.white;
 
@@ -39,13 +45,14 @@ public class SplitUI : MonoBehaviour
         Color32 alpha = new Color32(0, 0, 0, 0);
         Color32 fillColor = new Color32(255, 255, 255, 255);
 
-        int index = 0;
-        for (int y = 0; y < generateMask.height; y++)
+        Vector2 center = new Vector2(width / 2, height / 2);
+        for (int y = 0; y < height; y++)
         {
-            for (int x = 0; x < generateMask.width; x++)
+            for (int x = 0; x < width; x++)
             {
                 Vector2 pixel = new Vector2(x, y);
-                data[index++] = OuterSliceCheck(pixel, center, centerRadius, outerRadius, angle1, angle2) ? fillColor : alpha;
+                int index = y * width + x;
+                data[index] = region.CheckRegion(pixel) ? fillColor : alpha;
             }
         }
         // upload to the GPU
@@ -53,7 +60,7 @@ public class SplitUI : MonoBehaviour
     }
 
 
-    public bool OuterSliceCheck(Vector2 pixel, Vector2 center, float centerRadius, float outerRadius, float angle1, float angle2)
+    public bool InnerSliceCheck(Vector2 pixel, Vector2 center, float centerRadius, float outerRadius, float angle1, float angle2)
     {
         //check if it's not in the middle, within range of the outer,and within the proper angle
         return !ShiftUIGen.CircleCheck(pixel, center, centerRadius)&& ShiftUIGen.CircleCheck(pixel, center,outerRadius) && ShiftUIGen.AngleCheck(pixel, center, angle1, angle2);
