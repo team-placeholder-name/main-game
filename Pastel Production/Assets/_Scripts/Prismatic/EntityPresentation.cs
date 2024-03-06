@@ -63,7 +63,8 @@ namespace Prismatic
                 PrismaticEntity entityToRender = simulationTarget.SimulationData.Entities[i];
                 entityModels[i].transform.position = entityToRender.Position;
                 entityModels[i].transform.rotation = entityToRender.Rotation;
-                entityModels[i].transform.GetChild(0).GetComponent<Renderer>().material.color = entityToRender.HueMix.Color;
+                entityModels[i].transform.GetComponent<ModelData>().InnerBody.material.color = entityToRender.HueMix.Color;
+                entityModels[i].transform.GetComponent<ModelData>().OuterBody.material.color = entityToRender.HueMix.Color;
                 entityModels[i].SetActive(true);
             }
             for(; i< entityModels.Count; i++)

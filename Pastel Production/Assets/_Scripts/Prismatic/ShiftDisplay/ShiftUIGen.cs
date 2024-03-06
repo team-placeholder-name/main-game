@@ -158,7 +158,7 @@ public class SelectionRegion
     float angleOffset;
     float angle;
     Vector2 regionCenter;
-
+    int boarder;
 
     public SelectionRegion(Vector2 center, float innerRadius, float outerRadius, float angleOffset, float angle) 
     { 

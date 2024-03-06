@@ -124,7 +124,8 @@ namespace Prismatic
 
         public Vector2 MousePos;
         // Max Vertical Rotation - currently this is hardcoded but it should be configurable via editor until we find something comfortable
-        public const float maxYAngle =89;
+        public const float maxYAngle =45;
+        public const float minYAngle = -30;
 
     }
 
