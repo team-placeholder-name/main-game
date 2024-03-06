@@ -30,7 +30,7 @@ public class ColorWheel : MonoBehaviour
     void Update()
     {
         PrismaticEntity previousEntity = currentEntity;
-        currentEntity = simulationTarget.SimulationData.currentEntity;
+        currentEntity = simulationTarget.SimulationData.CurrentEntity;
 
         if (currentEntity != previousEntity || previousEntity == null)
         {

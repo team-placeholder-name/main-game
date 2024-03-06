@@ -45,8 +45,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simulationTarget: {fileID: 739844758233423123}
-  EntityModel: {fileID: 8732552424634671308, guid: f51538180482e4a4ba212e61c3ad316f,
+  entityModel: {fileID: 8732552424634671308, guid: f51538180482e4a4ba212e61c3ad316f,
     type: 3}
+  shiftUIGen:
+    SwapUIPrefab: {fileID: 1522933051265100375, guid: 16400d4664666c34aa7308bd4796544e,
+      type: 3}
+    SplitUIPrefab: {fileID: 1522933051265100375, guid: 0b9686af3dac83440a63095022ad54e3,
+      type: 3}
+    canvasPrefab: {fileID: 7547140859471614006, guid: e32fce53df810a64fafc191f3e9cbc6d,
+      type: 3}
+  entityModels: []
 --- !u!1 &3872342452550566804
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,12 +279,9 @@ MonoBehaviour:
     XYAngles: {x: 0, y: 0}
   move:
     speed: 5
-  swap:
-    reticule: {fileID: 2134063473265720927, guid: be634abe2e0edaf469f1582b233477e1,
-      type: 3}
-  refract:
-    colorWheel: {fileID: 0}
-  project:
-    reticule: {fileID: 2134063473265720927, guid: be634abe2e0edaf469f1582b233477e1,
-      type: 3}
+    turnSpeedInRadians: 0.5
+  shift:
+    _entityPresentation: {fileID: 2443306143264257040}
+  merge:
+    duration: 0.5
   currentStateType: 0

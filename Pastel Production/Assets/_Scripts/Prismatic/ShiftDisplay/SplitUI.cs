@@ -23,7 +23,7 @@ public class SplitUI : MonoBehaviour
     
 
     //TODO: Refactor the shared logic into a seperate function
-    public void GenerateCutoutSlice(Color color, SelectionRegion region)
+    public void GenerateSplitRegion(Color color, SelectionRegion region)
     {
         int width = Screen.width;
         int height = Screen.height;
@@ -45,7 +45,6 @@ public class SplitUI : MonoBehaviour
         Color32 alpha = new Color32(0, 0, 0, 0);
         Color32 fillColor = new Color32(255, 255, 255, 255);
 
-        Vector2 center = new Vector2(width / 2, height / 2);
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
@@ -58,13 +57,4 @@ public class SplitUI : MonoBehaviour
         // upload to the GPU
         generateMask.Apply();
     }
-
-
-    public bool InnerSliceCheck(Vector2 pixel, Vector2 center, float centerRadius, float outerRadius, float angle1, float angle2)
-    {
-        //check if it's not in the middle, within range of the outer,and within the proper angle
-        return !ShiftUIGen.CircleCheck(pixel, center, centerRadius)&& ShiftUIGen.CircleCheck(pixel, center,outerRadius) && ShiftUIGen.AngleCheck(pixel, center, angle1, angle2);
-    }
-
-
 }

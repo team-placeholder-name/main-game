@@ -8,8 +8,6 @@ using UnityEngine.UI;
 public class SwapUI : MonoBehaviour
 {
     [SerializeField]
-    Camera rtInput;
-    [SerializeField]
     RawImage rtOutput;
     [SerializeField]
     RawImage mask;
@@ -23,12 +21,11 @@ public class SwapUI : MonoBehaviour
     }
 
     //TODO: Refactor the shared logic into a seperate function
-    public void GenerateSwapRegion(Camera rtInput, SelectionRegion region)
+    public void GenerateSwapRegion(Camera rtInput, SelectionRegion region, int boarder)
     {
         int width= Screen.width;
         int height = Screen.height;
-        
-        this.rtInput = rtInput;
+ 
 
         
         rtOutput.transform.position = region.GetCenter();
@@ -62,13 +59,10 @@ public class SwapUI : MonoBehaviour
             {
                 Vector2 pixel = new Vector2(x, y);
                 int index = y * width + x;
-                data[index++] = region.CheckBoarderedRegion(pixel,20) ? fillColor : alpha;
+                data[index++] = region.CheckBoarderedRegion(pixel,boarder) ? fillColor : alpha;
             }
         }
         // upload to the GPU
         generateMask.Apply();
     }
-
-
-    
 }

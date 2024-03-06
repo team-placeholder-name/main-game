@@ -88,6 +88,10 @@ namespace Prismatic
         {
             GetState(currentStateType).OnShift(simulationData);
         }
+        public void OnShiftSelect(Vector2 pos)
+        {
+            GetState(currentStateType).OnShiftSelect(pos, simulationData);
+        }
 
     }
 
@@ -133,7 +137,7 @@ namespace Prismatic
 
         private SimulationData data;
         public ReadOnlyCollection<PrismaticEntity> Entities { get => data.entities.AsReadOnly(); }
-        public PrismaticEntity currentEntity { get => data.currentEntity; }
+        public PrismaticEntity CurrentEntity { get => data.currentEntity; }
         public Vector3 ViewPosition { get => data.ViewPosition; }
         public Vector3 ViewTarget { get => data.ViewTarget; }
         public Vector3 XYAngles { get => data.XYAngles; }

@@ -46,6 +46,6 @@ namespace Prismatic
 
         public abstract void OnMerge(SimulationData simulationData);
 
-
+        public abstract void OnShiftSelect(Vector2 mousePos, SimulationData simulationData);
     }
 }

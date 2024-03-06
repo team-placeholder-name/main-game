@@ -149,6 +149,11 @@ namespace Prismatic
         {
             Transition(StateType.Shift);
         }
+
+        public override void OnShiftSelect(Vector2 mousePos, SimulationData simulationData)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

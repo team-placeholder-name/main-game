@@ -98,7 +98,12 @@ namespace Prismatic
 
         public override void OnShift(SimulationData simulationData)
         {
-            throw new NotImplementedException();
+            
+        }
+
+        public override void OnShiftSelect(Vector2 mousePos, SimulationData simulationData)
+        {
+          
         }
     }
 }

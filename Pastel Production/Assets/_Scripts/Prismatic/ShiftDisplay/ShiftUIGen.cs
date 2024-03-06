@@ -1,4 +1,5 @@
 using Prismatic;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -6,6 +7,11 @@ using UnityEngine;
 [System.Serializable]
 public class ShiftUIGen
 {
+    //TODO: These should be generated in the Simulation and referenced by the presentation
+    public List<(SelectionRegion, Color)> hues;
+    public List<(SelectionRegion, PrismaticEntity)> entities;
+
+
     //The use of prefabs is problematic because they serve no utility. 
     //There is no reason we would want to edit this prefab so exposing this information opens up unessesary organizational overhead
     [SerializeField]
@@ -14,6 +20,8 @@ public class ShiftUIGen
     GameObject SplitUIPrefab;
 
     [SerializeField]
+    GameObject canvasPrefab;
+   // [SerializeField]
     Canvas targetCanvas;
 
     List<SwapUI> swapUIs;
@@ -23,11 +31,15 @@ public class ShiftUIGen
     int splitCount = 10;
     int swapCount = 10;
 
+
+
     //Find a way to make it easier to iterate over all these values.
     //Use these parameters to find what section of teh screen has been selected
 
     public void SetUp()
     {
+        
+        targetCanvas = GameObject.Instantiate(canvasPrefab).GetComponent<Canvas>();
         //Split is the color slices around the center circle
         splitUIs = new List<SplitUI>();
         for (int i = 0; i < splitCount; i++)
@@ -48,19 +60,28 @@ public class ShiftUIGen
         centerDisplay.gameObject.SetActive(false);
     }
 
+    public void HideUI()
+    {
+        targetCanvas.gameObject.SetActive(false);
+    }
     //TODO: Store all selection regions to a data structure for reference by player input
     public void DisplayUI(PrismaticEntity controlledEntity, ReadOnlyCollection<PrismaticEntity> prismaticEntitys, List<GameObject> entityModels)
     {
+        hues = new();
+        entities = new();
+        List<GameObject> swapModels = new();
+        targetCanvas.gameObject.SetActive(true);
         int innerRadius;
         float outerRadius;
         float splitCellSize;
         float splitStartAngle;
         float swapCellSize;
         float swapStartAngle;
+        
 
+        
+        Vector2 screenCenter = new Vector2(Screen.width, Screen.height) / 2;
 
-        GameObject controlledModel = null;
-        List<GameObject> swapModels = new();
         //Spliting
         innerRadius = (int)(Screen.height / 4.5f);
         outerRadius = Screen.height / 3.5f;
@@ -70,8 +91,12 @@ public class ShiftUIGen
         int uiIndex;
         for (uiIndex = 0; uiIndex < controlledEntity.HueMix.Colors.Count; uiIndex++)
         {
-            SelectionRegion region = new SelectionRegion(new Vector2(Screen.width, Screen.height) / 2, innerRadius, outerRadius, splitStartAngle + 0 + splitCellSize * uiIndex, splitCellSize);
-            splitUIs[uiIndex].GenerateCutoutSlice(controlledEntity.HueMix.Colors[uiIndex].color, region);
+            SelectionRegion region = new SelectionRegion(screenCenter, innerRadius, outerRadius, splitStartAngle + splitCellSize * uiIndex, splitCellSize);
+            Color color = controlledEntity.HueMix.Colors[uiIndex].color;
+            
+            hues.Add((region, color));
+
+            splitUIs[uiIndex].GenerateSplitRegion(color, region);
             splitUIs[uiIndex].gameObject.SetActive(true); 
         }
         for(; uiIndex < splitUIs.Count; uiIndex++)
@@ -79,73 +104,35 @@ public class ShiftUIGen
             splitUIs[uiIndex].gameObject.SetActive(false);
         }
 
-
+        //swapping
         swapCellSize = 360 / (prismaticEntitys.Count-1 );
         swapStartAngle = swapCellSize / 2;
 
-
+        uiIndex = 0;
         for (int i = 0; i < prismaticEntitys.Count; i++)
         {
             if (prismaticEntitys[i] == controlledEntity)
             {
-                controlledModel = entityModels[i];
+                SelectionRegion circleRegion = new SelectionRegion(screenCenter, 0, innerRadius, 0, 360);
+                entities.Add((circleRegion, controlledEntity));
+                centerDisplay.GenerateSwapRegion(entityModels[i].GetComponentInChildren<Camera>(), circleRegion, 0);
+                centerDisplay.gameObject.SetActive(true);
             }
             else
             {
+                SelectionRegion region = new SelectionRegion(screenCenter, outerRadius, outerRadius * 2, swapStartAngle + 0 + swapCellSize * uiIndex, swapCellSize);
                 swapModels.Add(entityModels[i]);
+                entities.Add((region, prismaticEntitys[i]));
+                swapUIs[uiIndex].GenerateSwapRegion(swapModels[uiIndex].GetComponentInChildren<Camera>(), region, 20);
+                swapUIs[uiIndex].gameObject.SetActive(true);
+                uiIndex++;
             }
-        }
-        SelectionRegion circleRegion = new SelectionRegion(new Vector2(Screen.width, Screen.height) / 2, 0, innerRadius, 0, 360);
-        //centerDisplay.GenerateCircleCutout(controlledModel.GetComponentInChildren<Camera>(), centerRadius);
-        centerDisplay.GenerateSwapRegion(controlledModel.GetComponentInChildren<Camera>(), circleRegion);
-        centerDisplay.gameObject.SetActive(true);
-        for(uiIndex = 0;uiIndex < swapModels.Count;uiIndex++)
-        {
-            SelectionRegion region = new SelectionRegion(new Vector2(Screen.width,Screen.height)/2,outerRadius,outerRadius*2,swapStartAngle + 0 + swapCellSize * uiIndex,swapCellSize);
-            swapUIs[uiIndex].GenerateSwapRegion(swapModels[uiIndex].GetComponentInChildren<Camera>(), region);
-            swapUIs[uiIndex].gameObject.SetActive(true);
         }
         for(;uiIndex < swapUIs.Count;uiIndex++)//deactivate all of the panels that arn't being used
         {
-            splitUIs[uiIndex].gameObject.SetActive(false);
+            swapUIs[uiIndex].gameObject.SetActive(false);
         }
     }
-    
-
-    public Vector2 CircleSize(float radius)
-    {
-        return new Vector2(radius*2, radius*2);
-    }
-    public static bool CircleCheck(Vector2 point, Vector2 center, float radius)
-    { 
-        return Vector2.Distance(point, center) < radius;
-    }
-    public static bool AngleCheck(Vector2 point, Vector2 center, float angleStart, float angleEnd)
-    {
-        Vector2 dir = (point - center).normalized;
-        Vector2  start = new Vector2(Mathf.Cos(Mathf.Deg2Rad*angleStart), Mathf.Sin(Mathf.Deg2Rad*angleStart));
-        Vector2 end = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angleEnd), Mathf.Sin(Mathf.Deg2Rad * angleEnd));
-        float angleDif = (Vector2.Angle(dir, start) + Vector2.Angle(dir, end)) - Vector2.Angle(start, end);
-        return angleDif < 0.1f&& angleDif>-0.1f;
-    }
-    public static Vector2 GetCenterOfSlice(Vector2 center,float angleStart, float angleEnd, float fraction)
-    {
-        Vector2 start = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angleStart), Mathf.Sin(Mathf.Deg2Rad * angleStart));
-        Vector2 end = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angleEnd), Mathf.Sin(Mathf.Deg2Rad * angleEnd));
-        Vector2 edge = Vector2.Scale((end + start).normalized, new Vector2(Screen.width, Screen.height));
-        return edge/fraction+center;
-    }
-
-    public static bool OuterSliceCheck(Vector2 pixel, Vector2 center, float centerRadius, float angle1, float angle2)
-    {
-        return !ShiftUIGen.CircleCheck(pixel, center, centerRadius) && ShiftUIGen.AngleCheck(pixel, center, angle1, angle2);
-    }
-    public bool InnerSliceCheck(Vector2 pixel, Vector2 center, float centerRadius, float outerRadius, float angle1, float angle2)
-    {
-        //check if it's not in the middle, within range of the outer,and within the proper angle
-        return !ShiftUIGen.CircleCheck(pixel, center, centerRadius) && ShiftUIGen.CircleCheck(pixel, center, outerRadius) && ShiftUIGen.AngleCheck(pixel, center, angle1, angle2);
-    }
-
 }
 
 public class SelectionRegion
@@ -163,18 +150,8 @@ public class SelectionRegion
         this.innerRadius= innerRadius;
         this.outerRadius= outerRadius;
         this.angleOffset= angleOffset;
-        if(angle == 360) 
-        {
-            this.angle = 180;
-        }
-        else if (angle == 180)
-        {
-            this.angle = 179;
-        }
-        else
-        {
-            this.angle = angle;
-        }
+
+        this.angle = angle;
         this.regionCenter = CalculateCenter();
     }
 
@@ -185,21 +162,23 @@ public class SelectionRegion
         return
             !CircleCheck(point, screenCenter, innerRadius)
             && CircleCheck(point, screenCenter, outerRadius)
-            && AngleCheck(point,screenCenter, angleOffset, angle);
+            && (AngleCheck(point, screenCenter, angleOffset, angle / 2)
+            || AngleCheck(point, screenCenter, angleOffset +(angle / 2), angle/2));
     }
-    public bool CheckBoarderedRegion(Vector2 point, float boarder)
+    public bool CheckBoarderedRegion(Vector2 point, int boarder)
     {
         Vector2 start = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angleOffset), Mathf.Sin(Mathf.Deg2Rad * angleOffset));
         Vector2 end = new Vector2(Mathf.Cos(Mathf.Deg2Rad * (angleOffset + angle)), Mathf.Sin(Mathf.Deg2Rad * (angleOffset + angle)));
         Vector2 centerVector = (end + start).normalized;
 
         Vector2 boarderOffset = centerVector * boarder;
-
-
+        //float innerBoarder = boarder;
+        //if(innerRadius == 0) { innerBoarder = 0; }
         return
-            !CircleCheck(point - boarderOffset, screenCenter, innerRadius)
+            !CircleCheck(point, screenCenter, innerRadius+ boarder)
             && CircleCheck(point, screenCenter, outerRadius - boarder)
-            && AngleCheck(point - boarderOffset, screenCenter, angleOffset, angle);
+            && (AngleCheck(point-boarderOffset, screenCenter, angleOffset, angle / 2)
+            || AngleCheck(point - boarderOffset, screenCenter, angleOffset + (angle / 2), angle / 2));
     }
     public Vector2 GetCenter()
     {

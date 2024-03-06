@@ -56,8 +56,17 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
     {
         controlledSimulation.OnShift();
     }
+
+    private void OnShiftSelect(InputValue value)
+    {
+        Vector2 select = Mouse.current.position.ReadValue();
+        controlledSimulation.OnShiftSelect(select);
+
+    }
+
     private void OnRestart(InputValue value)
     {
         SceneManager.LoadScene(0);
     }
+
 }
