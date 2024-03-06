@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 521136419000675011}
-  - component: {fileID: 6692490566159665260}
+  - component: {fileID: 779826709385842077}
   m_Layer: 5
-  m_Name: SplitUI
+  m_Name: SwapVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38,7 +38,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6692490566159665260
+--- !u!114 &779826709385842077
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,10 +47,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1522933051265100375}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f213d7736643354d88889ce66b77d40, type: 3}
+  m_Script: {fileID: 11500000, guid: ed1d52708cc02304ca6fae64bbecde24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: 2165143627578372497}
+  rtOutput: {fileID: 2165143627578372497}
   mask: {fileID: 8883322940019225130}
 --- !u!1 &5404919437413592028
 GameObject:

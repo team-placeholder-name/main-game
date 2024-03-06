@@ -122,6 +122,7 @@ namespace Prismatic
         [HideInInspector]
         public Vector2 XYAngles;
 
+        public Vector2 MousePos;
         // Max Vertical Rotation - currently this is hardcoded but it should be configurable via editor until we find something comfortable
         public const float maxYAngle =89;
 
@@ -141,6 +142,7 @@ namespace Prismatic
         public Vector3 ViewPosition { get => data.ViewPosition; }
         public Vector3 ViewTarget { get => data.ViewTarget; }
         public Vector3 XYAngles { get => data.XYAngles; }
+        public Vector2 MousePos { get=> data.MousePos; }
     }
 
     
