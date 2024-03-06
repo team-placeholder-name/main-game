@@ -5,6 +5,8 @@ using System.Collections.ObjectModel;
 using UnityEngine;
 
 [System.Serializable]
+
+//TODO: Move most of this logic into the simulation, this should  have access to selection regions, and  use only that for rendering aspects of the screen.
 public class ShiftUIGen
 {
     //TODO: These should be generated in the Simulation and referenced by the presentation
@@ -72,6 +74,7 @@ public class ShiftUIGen
         List<GameObject> swapModels = new();
         targetCanvas.gameObject.SetActive(true);
         int innerRadius;
+        float midRadius;
         float outerRadius;
         float splitCellSize;
         float splitStartAngle;
@@ -84,14 +87,28 @@ public class ShiftUIGen
 
         //Spliting
         innerRadius = (int)(Screen.height / 4.5f);
-        outerRadius = Screen.height / 3.5f;
+        midRadius = Screen.height / 3.5f;
+        outerRadius = midRadius * 2;
         splitCellSize = 360 / (controlledEntity.HueMix.Colors.Count);
-        splitStartAngle = splitCellSize / 3;
-       
+        splitStartAngle = 60;
+        //swapping
+        if (prismaticEntitys.Count <= 2)
+        {
+            //midRadius = outerRadius;
+            swapCellSize = 180;
+        }
+        else
+        {
+            swapCellSize = 360 / (prismaticEntitys.Count - 1);
+        }
+        swapStartAngle = 45;
+
+
+        //spliting
         int uiIndex;
         for (uiIndex = 0; uiIndex < controlledEntity.HueMix.Colors.Count; uiIndex++)
         {
-            SelectionRegion region = new SelectionRegion(screenCenter, innerRadius, outerRadius, splitStartAngle + splitCellSize * uiIndex, splitCellSize);
+            SelectionRegion region = new SelectionRegion(screenCenter, innerRadius, midRadius, splitStartAngle + splitCellSize * uiIndex, splitCellSize);
             Color color = controlledEntity.HueMix.Colors[uiIndex].color;
             
             hues.Add((region, color));
@@ -105,9 +122,6 @@ public class ShiftUIGen
         }
 
         //swapping
-        swapCellSize = 360 / (prismaticEntitys.Count-1 );
-        swapStartAngle = swapCellSize / 2;
-
         uiIndex = 0;
         for (int i = 0; i < prismaticEntitys.Count; i++)
         {
@@ -120,7 +134,7 @@ public class ShiftUIGen
             }
             else
             {
-                SelectionRegion region = new SelectionRegion(screenCenter, outerRadius, outerRadius * 2, swapStartAngle + 0 + swapCellSize * uiIndex, swapCellSize);
+                SelectionRegion region = new SelectionRegion(screenCenter, midRadius, outerRadius, swapStartAngle + 0 + swapCellSize * uiIndex, swapCellSize);
                 swapModels.Add(entityModels[i]);
                 entities.Add((region, prismaticEntitys[i]));
                 swapUIs[uiIndex].GenerateSwapRegion(swapModels[uiIndex].GetComponentInChildren<Camera>(), region, 20);
@@ -167,9 +181,7 @@ public class SelectionRegion
     }
     public bool CheckBoarderedRegion(Vector2 point, int boarder)
     {
-        Vector2 start = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angleOffset), Mathf.Sin(Mathf.Deg2Rad * angleOffset));
-        Vector2 end = new Vector2(Mathf.Cos(Mathf.Deg2Rad * (angleOffset + angle)), Mathf.Sin(Mathf.Deg2Rad * (angleOffset + angle)));
-        Vector2 centerVector = (end + start).normalized;
+        Vector2 centerVector = new Vector2(Mathf.Cos(Mathf.Deg2Rad * (angleOffset + angle / 2)), Mathf.Sin(Mathf.Deg2Rad * (angleOffset + angle / 2)));
 
         Vector2 boarderOffset = centerVector * boarder;
         //float innerBoarder = boarder;
@@ -187,10 +199,7 @@ public class SelectionRegion
 
     private Vector2 CalculateCenter()
     {
-
-        Vector2 start = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angleOffset), Mathf.Sin(Mathf.Deg2Rad * angleOffset));
-        Vector2 end = new Vector2(Mathf.Cos(Mathf.Deg2Rad * (angleOffset+angle)), Mathf.Sin(Mathf.Deg2Rad * (angleOffset+angle)));
-        Vector2 centerVector = (end + start).normalized;
+        Vector2 centerVector = new Vector2(Mathf.Cos(Mathf.Deg2Rad * (angleOffset + angle / 2)), Mathf.Sin(Mathf.Deg2Rad * (angleOffset + angle / 2)));
         float max = Vector2.Scale(centerVector, new Vector2(Screen.width, Screen.height)).magnitude;
         float outerDistance = Mathf.Min(outerRadius, max);
 

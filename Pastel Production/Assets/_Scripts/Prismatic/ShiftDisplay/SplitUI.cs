@@ -25,18 +25,16 @@ public class SplitUI : MonoBehaviour
     //TODO: Refactor the shared logic into a seperate function
     public void GenerateSplitRegion(Color color, SelectionRegion region)
     {
-        int width = Screen.width;
-        int height = Screen.height;
-
         image.color = color;
 
-        
+
+        int width = Screen.width;
+        int height = Screen.height;
 
         Texture2D generateMask;
 
         generateMask = new Texture2D(width, height, TextureFormat.RGBA32, false);
-        mask.texture = generateMask;
-        mask.color = Color.white;
+
 
         // RGBA32 texture format data layout exactly matches Color32 struct
         NativeArray<Color32> data = generateMask.GetRawTextureData<Color32>();
@@ -56,5 +54,7 @@ public class SplitUI : MonoBehaviour
         }
         // upload to the GPU
         generateMask.Apply();
+        mask.texture = generateMask;
+        mask.color = Color.white;
     }
 }

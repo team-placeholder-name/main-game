@@ -25,25 +25,10 @@ public class SwapUI : MonoBehaviour
     {
         int width= Screen.width;
         int height = Screen.height;
- 
-
-        
-        rtOutput.transform.position = region.GetCenter();
-
-        RenderTexture renderTexture;
-        Texture2D generateMask;
-        //apply the render texture
-        renderTexture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);//Try a depth buffer of 16 or 32 if masking gives
-        renderTexture.Create();
-        rtInput.targetTexture = renderTexture;
-        rtOutput.texture = renderTexture;
-        // Release the hardware resources used by the render texture 
-        renderTexture.Release();
 
 
-        generateMask = new Texture2D(width, height, TextureFormat.RGBA32, false);
-        mask.texture = generateMask;
-        mask.color = Color.white;
+        Texture2D generateMask = new Texture2D(width, height, TextureFormat.RGBA32, false);
+
 
         // RGBA32 texture format data layout exactly matches Color32 struct
         NativeArray<Color32> data = generateMask.GetRawTextureData<Color32>();
@@ -64,5 +49,21 @@ public class SwapUI : MonoBehaviour
         }
         // upload to the GPU
         generateMask.Apply();
+
+
+
+        //This stuff stays here?
+        rtOutput.transform.position = region.GetCenter();
+        RenderTexture renderTexture;
+
+        //apply the render texture
+        renderTexture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);//Try a depth buffer of 16 or 32 if masking gives
+        renderTexture.Create();
+        rtInput.targetTexture = renderTexture;
+        rtOutput.texture = renderTexture;
+        // Release the hardware resources used by the render texture 
+        renderTexture.Release();
+        mask.texture = generateMask;
+        mask.color = Color.white;
     }
 }

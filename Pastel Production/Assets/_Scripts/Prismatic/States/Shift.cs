@@ -66,17 +66,19 @@ namespace Prismatic
         }
         public void OnSplit(SimulationData simulationData, Color color)
         {
-            HueMix currentHueMix = simulationData.currentEntity.HueMix;
-            currentHueMix.RemoveColor(color);
-            PrismaticEntity outputEntity = new PrismaticEntity(simulationData.currentEntity.Position, simulationData.currentEntity.Rotation, new HueMix(
-                new List<ColorWeight>
-                {
+            if (simulationData.currentEntity.HueMix.Colors.Count > 1)
+            {
+                HueMix currentHueMix = simulationData.currentEntity.HueMix;
+                currentHueMix.RemoveColor(color);
+                PrismaticEntity outputEntity = new PrismaticEntity(simulationData.currentEntity.Position, simulationData.currentEntity.Rotation, new HueMix(
+                    new List<ColorWeight>
+                    {
                         new ColorWeight(color,1)
-                }
-            ));
-            simulationData.entities.Add(outputEntity);
-            simulationData.currentEntity = outputEntity;
-            
+                    }
+                ));
+                simulationData.entities.Add(outputEntity);
+                simulationData.currentEntity = outputEntity;
+            }
             Transition(StateType.Move);
         }
         public override void OnMouseMove(Vector2 mousePos)

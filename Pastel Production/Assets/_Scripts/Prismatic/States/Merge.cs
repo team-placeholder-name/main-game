@@ -9,10 +9,12 @@ namespace Prismatic
     {
         [SerializeField]
         private float duration = 0.5f;
-
+        [SerializeField]
+        private float MergeAngle = 15;
 
         private float endTime;
         
+
   
 
         public override void Update(SimulationData data)
@@ -63,7 +65,7 @@ namespace Prismatic
                 //Second, check if it's the closest to the players view
                 Vector3 entityDirection = entityToCheck.Position - data.ViewPosition;
                 float angle = Vector3.Angle(viewDirection, entityDirection);
-                if (angle < smallestAngle)
+                if (angle < smallestAngle && angle < MergeAngle)
                 {
                     smallestAngle = angle;
                     targetEntity = data.entities[i];
