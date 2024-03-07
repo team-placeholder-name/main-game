@@ -9,7 +9,7 @@ namespace Prismatic
     [System.Serializable]
     public class Shift : State
     {
-
+        
         [SerializeField]
         EntityPresentation _entityPresentation;
         public override void Enter(Action<StateType> transition, SimulationData data)
@@ -28,6 +28,7 @@ namespace Prismatic
             _entityPresentation.HideShiftUI();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            data.Morph = true;
         }
         public override void OnShiftSelect(Vector2 mousePos, SimulationData simulationData)
         {

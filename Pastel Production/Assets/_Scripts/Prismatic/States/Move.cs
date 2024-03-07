@@ -26,6 +26,7 @@ namespace Prismatic
             UpdatePosition(data);
 
             UpdateView(data);
+            
         }
 
         private void UpdatePosition(SimulationData data)
@@ -60,7 +61,7 @@ namespace Prismatic
             {
                 data.currentEntity.Rotation = Quaternion.LookRotation(moveDelta.normalized, movementNormal);
             }
-
+            data.currentEntity.Velocity = moveDelta.magnitude / Time.deltaTime;
             int collisionLayer = 1 << LayerMask.NameToLayer("Default");
 
 

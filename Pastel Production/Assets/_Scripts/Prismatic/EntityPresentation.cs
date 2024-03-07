@@ -23,6 +23,7 @@ namespace Prismatic
         private void Start()
         {
             shiftUIGen.SetUp();
+            
 
         }
 
@@ -63,8 +64,26 @@ namespace Prismatic
                 PrismaticEntity entityToRender = simulationTarget.SimulationData.Entities[i];
                 entityModels[i].transform.position = entityToRender.Position;
                 entityModels[i].transform.rotation = entityToRender.Rotation;
-                entityModels[i].transform.GetComponent<ModelData>().InnerBody.material.color = entityToRender.HueMix.Color;
-                entityModels[i].transform.GetComponent<ModelData>().OuterBody.material.color = entityToRender.HueMix.Color;
+                Color c = entityToRender.HueMix.Color;
+
+                entityModels[i].transform.GetComponent<ModelData>().InnerBody.material.color = c;
+                c.a = 0.5f;
+                entityModels[i].transform.GetComponent<ModelData>().OuterBody.materials[0].color = c;
+                entityModels[i].transform.GetComponent<ModelData>().OuterBody.materials[1].color = c
+;
+                if (simulationTarget.SimulationData.Entities[i] == simulationTarget.SimulationData.CurrentEntity)
+                {
+                    if (simulationTarget.SimulationData.Morph)
+                    {
+                        entityModels[i].transform.GetComponent<ModelData>().Animator.SetTrigger("Morph");
+                        simulationTarget.SimulationData.ResetMorph();
+                    }
+                }
+
+
+                entityModels[i].transform.GetComponent<ModelData>().Animator.SetFloat("Velocity", entityToRender.Velocity);
+
+
                 entityModels[i].SetActive(true);
             }
             for(; i< entityModels.Count; i++)
