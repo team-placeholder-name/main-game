@@ -32,6 +32,7 @@ namespace Prismatic
         {
             base.Enter(transition, data);
             MergeToTarget(data);
+            data.Morph = true;
             endTime = Time.time+duration;
         }
 

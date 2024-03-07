@@ -15,14 +15,14 @@ public static class CameraUtility
         return data.currentEntity.Position + Vector3.up * height;
     }
 
-    public static float AdjustAngle(float change, float current, float max)
+    public static float AdjustAngle(float change, float current, float min, float max)
     {
         if (max == 0)
         {
             return current + change;
         }
         
-        return Mathf.Clamp(current + change, -0.55f * max, max);
+        return Mathf.Clamp(current + change, min, max);
     }
 
     public static Quaternion GetView(SimulationData data, Vector3 entityCenter, float groundDistance)

@@ -13,12 +13,12 @@ namespace Prismatic
         private Vector2 movementInput = Vector2.zero;
         [SerializeField]
         private float speed = 5.0f;
-        private float viewHeight = 2.0f;
+        private float viewHeight = 1.5f;
         private float viewDistance = 3.0f;
         [SerializeField] // Here while we tune in the best-feeling value for this, then we can remove this from the inspector
         private float turnSpeedInRadians = 0.5f; 
         private float xAngle, yAngle;
-        private float yAngleLimit;
+
 
 
         public override void Update(SimulationData data)
@@ -26,6 +26,7 @@ namespace Prismatic
             UpdatePosition(data);
 
             UpdateView(data);
+            
         }
 
         private void UpdatePosition(SimulationData data)
@@ -60,7 +61,7 @@ namespace Prismatic
             {
                 data.currentEntity.Rotation = Quaternion.LookRotation(moveDelta.normalized, movementNormal);
             }
-
+            data.currentEntity.Velocity = moveDelta.magnitude / Time.deltaTime;
             int collisionLayer = 1 << LayerMask.NameToLayer("Default");
 
 
@@ -119,7 +120,7 @@ namespace Prismatic
 
         public override void Enter(Action<StateType> transition, SimulationData data)
         {
-            yAngleLimit = SimulationData.maxYAngle;
+
             xAngle = data.XYAngles.x;
             yAngle = data.XYAngles.y;
             OnMoveInput(Vector2.zero);//TODO: Make move input consistent between states, the player should be able to ready movement in the previous state
@@ -128,8 +129,9 @@ namespace Prismatic
 
         public override void OnMouseMove(Vector2 mouseDelta)
         {
+
             xAngle += mouseDelta.x;
-            yAngle = CameraUtility.AdjustAngle(mouseDelta.y, yAngle, yAngleLimit);
+            yAngle = CameraUtility.AdjustAngle(mouseDelta.y, yAngle,SimulationData.minYAngle, SimulationData.maxYAngle);
            
         }
 

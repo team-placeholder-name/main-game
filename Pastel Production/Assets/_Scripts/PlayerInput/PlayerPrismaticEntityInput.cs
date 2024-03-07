@@ -66,7 +66,7 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
 
     private void OnRestart(InputValue value)
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 }

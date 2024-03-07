@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -104,6 +105,8 @@ namespace Prismatic
         public SimulationData()
         {
             readOnlyData = new ReadOnlySimulationData(this);
+            EnterMerge = () => { };
+            ExitShift = () => { };
             
         }
         public readonly ReadOnlySimulationData readOnlyData;
@@ -111,6 +114,12 @@ namespace Prismatic
         public List<PrismaticEntity> entities;
 
         public PrismaticEntity currentEntity;
+
+        public bool Morph;
+
+        public Action EnterMerge;
+        public Action ExitShift;
+
 
 
         // Where the player view originates from
@@ -121,10 +130,11 @@ namespace Prismatic
         public Vector3 ViewTarget;
         [HideInInspector]
         public Vector2 XYAngles;
-
+        [HideInInspector]
         public Vector2 MousePos;
         // Max Vertical Rotation - currently this is hardcoded but it should be configurable via editor until we find something comfortable
-        public const float maxYAngle =89;
+        public const float maxYAngle =45;
+        public const float minYAngle = -30;
 
     }
 
@@ -139,10 +149,21 @@ namespace Prismatic
         private SimulationData data;
         public ReadOnlyCollection<PrismaticEntity> Entities { get => data.entities.AsReadOnly(); }
         public PrismaticEntity CurrentEntity { get => data.currentEntity; }
+
+        public Action EnterMerge { get => data.EnterMerge; }
+        public Action ExitShift { get => data.ExitShift; }
+
+        public bool Morph { get => data.Morph; }
+        public void ResetMorph()
+        {
+            data.Morph = false;
+        }
         public Vector3 ViewPosition { get => data.ViewPosition; }
-        public Vector3 ViewTarget { get => data.ViewTarget; }
+        public Vector3 ViewTarget { get => data.ViewTarget; }  
         public Vector3 XYAngles { get => data.XYAngles; }
-        public Vector2 MousePos { get=> data.MousePos; }
+        public Vector2 MousePos { get => data.MousePos; }
+
+
     }
 
     
