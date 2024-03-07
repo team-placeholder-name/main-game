@@ -14,7 +14,7 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
     [SerializeField]
     private PrismaticEntitySimulation controlledSimulation;
     [SerializeField]
-    Vector2 mouseSensitivity = new Vector2(0.3f, -0.1f);
+    Vector2 mouseSensitivity = new Vector2(0.3f, 0.1f);
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;   
