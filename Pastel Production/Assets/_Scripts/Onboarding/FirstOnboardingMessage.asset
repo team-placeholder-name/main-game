@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 715e799455b15f24caa4dd285f8c8b87, type: 3}
-  m_Name: TestOnboardingMessage
+  m_Name: FirstOnboardingMessage
   m_EditorClassIdentifier: 
-  messageValue: Hi gang! I'm a thinking boi.
+  messageValue: It's blue! Like me!
