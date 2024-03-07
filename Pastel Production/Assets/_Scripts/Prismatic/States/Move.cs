@@ -15,7 +15,8 @@ namespace Prismatic
         private float speed = 5.0f;
         private float viewHeight = 2.0f;
         private float viewDistance = 3.0f;
-
+        [SerializeField] // Here while we tune in the best-feeling value for this, then we can remove this from the inspector
+        private float turnSpeedInRadians = 0.5f; 
         private float xAngle, yAngle;
         private float yAngleLimit;
 
@@ -29,54 +30,79 @@ namespace Prismatic
 
         private void UpdatePosition(SimulationData data)
         {
+            float stepHeight=0.5f;
+            float entityRadius = 0.5f;
             float groundDistance = 0.6f;
             Vector3 entityCenter = data.currentEntity.Position + Vector3.up * 0.5f;
-            Quaternion view = CameraUtility.GetView(data, entityCenter, groundDistance);
-            Matrix4x4 transformMatrix = Matrix4x4.Rotate(view);
-            Vector3 nextPosition = data.currentEntity.Position + (Vector3)(transformMatrix * new Vector3(movementInput.x, 0, movementInput.y) * Time.deltaTime * speed);
+            Vector3 moveInput = new Vector3(movementInput.x, 0, movementInput.y);
+
+            Physics.SphereCast(entityCenter+ Vector3.up*entityRadius, entityRadius, Vector3.down, out RaycastHit hit, groundDistance+entityRadius, 1 << LayerMask.NameToLayer("Default"));
+            Vector3 movementNormal = hit.normal;
+
+            Vector3 viewForward = Vector3.ProjectOnPlane(data.ViewTarget - data.ViewPosition,Vector3.up).normalized;
+            Vector3 moveForward = Quaternion.LookRotation(viewForward, Vector3.up)*moveInput;
+            Plane movePlane = new Plane(entityCenter, entityCenter+moveForward, entityCenter+Vector3.up);
+            Vector3 moveLine = Vector3.Cross(movementNormal,movePlane.normal).normalized;
+
+            Vector3 moveDelta = moveLine * Time.deltaTime * speed;
+            Vector3 nextPosition = data.currentEntity.Position + moveDelta;
+
+
+            // See if the camera has to rotate to keep up with the player changing direction
+            float dot_prod = Vector3.Dot(viewForward, moveForward.normalized);
+            bool turning = dot_prod < 0.75f && dot_prod > -0.75f && moveForward.magnitude > 0;
+            if (turning)
+            {
+                xAngle += turnSpeedInRadians * movementInput.x;
+            }
 
             if (nextPosition != data.currentEntity.Position)
             {
-
-                Vector3 movementVector = nextPosition - data.currentEntity.Position;
-                data.currentEntity.Rotation = Quaternion.LookRotation(movementVector, Vector3.up);
-            }
-            //Check for walls blocking movment
-            if (
-            Physics.SphereCast(entityCenter,
-                                0.4f,
-                                nextPosition - data.currentEntity.Position,
-                                out RaycastHit hit,
-                                (nextPosition - data.currentEntity.Position).magnitude,
-                                1 << LayerMask.NameToLayer("Default"))
-            )
-            {
-                nextPosition = data.currentEntity.Position;
+                data.currentEntity.Rotation = Quaternion.LookRotation(moveDelta.normalized, movementNormal);
             }
 
-            if (Physics.SphereCast(nextPosition + Vector3.up * 0.6f, 0.5f, Vector3.down, out hit, groundDistance, 1 << LayerMask.NameToLayer("Default")))
-            {
-                //snap the character to the ground
-                // Ed: Do we want to add a bounciness to the slime? Would this impede that?
-                nextPosition.y = hit.point.y;
+            int collisionLayer = 1 << LayerMask.NameToLayer("Default");
 
-            }
-            if (!Physics.Raycast(nextPosition + Vector3.up * 0.5f, Vector3.down, 1, 1 << LayerMask.NameToLayer("Default")))
-            {
-                //check if the next position is a valid ground position
-                nextPosition = data.currentEntity.Position;
-            }
 
             //Check if next position is within a HueBarrier
             Collider[] hueBarriers = Physics.OverlapSphere(nextPosition, 0.5f, 1 << LayerMask.NameToLayer("HueBarrier"));
-            if(hueBarriers.Length>0)
+            if (hueBarriers.Length > 0)
             {
                 if (hueBarriers[0].gameObject.GetComponent<HueBarrier>().hue != data.currentEntity.HueMix)
                 {
-                    nextPosition = data.currentEntity.Position;
+                    collisionLayer = (1 << LayerMask.NameToLayer("Default")) + (1 << LayerMask.NameToLayer("HueBarrier"));
                 }
             }
-            if(Physics.CheckSphere(nextPosition, 0.5f, 1 << LayerMask.NameToLayer("LevelEnd")))//TODO: Replace with a level end sequence
+            //check for a walkable sufrace
+            Vector3 nextGround= nextPosition;
+            if (Physics.SphereCast(
+                nextPosition + Vector3.up * (stepHeight + entityRadius), 
+                entityRadius, 
+                Vector3.down, 
+                out hit, 
+                stepHeight * 2, collisionLayer))
+            {
+                nextGround.y = hit.point.y;
+            }
+            else
+            {
+                //falling
+                nextGround.y -= 10 * Time.deltaTime;
+            }
+
+            if (Physics.OverlapSphere(nextGround + Vector3.up * (entityRadius+0.01f), entityRadius,collisionLayer).Length == 0)
+            {
+                
+                nextPosition = nextGround;
+            }
+            else
+            {
+                Debug.Log("BBlocked");
+                nextPosition = data.currentEntity.Position;
+            }
+
+            //TODO: Replace with a level end sequence
+            if (Physics.CheckSphere(nextPosition, 0.5f, 1 << LayerMask.NameToLayer("LevelEnd")))
             {
                 //Transition to next level
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -102,13 +128,9 @@ namespace Prismatic
 
         public override void OnMouseMove(Vector2 mouseDelta)
         {
-            xAngle = CameraUtility.AdjustAngle(mouseDelta.x, xAngle, 90);
+            xAngle += mouseDelta.x;
             yAngle = CameraUtility.AdjustAngle(mouseDelta.y, yAngle, yAngleLimit);
            
-        }
-        public override void OnSelect(SimulationData data)
-        {
-            Transition(StateType.Swap);
         }
 
         private void UpdateView(SimulationData data)
@@ -118,14 +140,19 @@ namespace Prismatic
             data.XYAngles = new Vector2(xAngle, yAngle);
         }
 
-        public override void OnProject(SimulationData simulationData)
+        public override void OnMerge(SimulationData simulationData)
         {
-            Transition(StateType.Project);
+            Transition(StateType.Merge);
         }
 
-        public override void OnRefract(SimulationData simulationData)
+        public override void OnShift(SimulationData simulationData)
         {
-            Transition(StateType.Refract);
+            Transition(StateType.Shift);
+        }
+
+        public override void OnShiftSelect(Vector2 mousePos, SimulationData simulationData)
+        {
+            throw new NotImplementedException();
         }
     }
 

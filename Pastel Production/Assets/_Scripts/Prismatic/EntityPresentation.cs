@@ -12,15 +12,32 @@ namespace Prismatic
         [SerializeField]
         private PrismaticEntitySimulation simulationTarget;
         [SerializeField]
-        private GameObject EntityModel;
+        private GameObject entityModel;
 
-        private List<GameObject> entityModels = new List<GameObject>();
+        [SerializeField]
+        public ShiftUIGen shiftUIGen;//move the logic from this to the simulation
 
+        public List<GameObject> entityModels = new List<GameObject>();
+
+
+        private void Start()
+        {
+            shiftUIGen.SetUp();
+
+        }
+
+        public void HideShiftUI()
+        {
+            shiftUIGen.HideUI();
+        }
+        public void DisplayShiftUI()
+        {
+            shiftUIGen.DisplayUI(simulationTarget.SimulationData.CurrentEntity, simulationTarget.SimulationData.Entities, entityModels);
+        }
         private void LateUpdate()
         {
             SimpleEntityUpdate();
             SimpleCameraUpdate();
-
         }
 
         //Placeholder camera follow script
@@ -41,7 +58,7 @@ namespace Prismatic
                 
                 if (entityModels.Count <= i)
                 {
-                    entityModels.Add(Instantiate(EntityModel));
+                    entityModels.Add(Instantiate(entityModel));
                 }
                 PrismaticEntity entityToRender = simulationTarget.SimulationData.Entities[i];
                 entityModels[i].transform.position = entityToRender.Position;

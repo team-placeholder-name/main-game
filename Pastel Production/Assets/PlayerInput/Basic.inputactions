@@ -24,16 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Select",
-                    "type": "Button",
-                    "id": "3d890c7c-e952-41a5-b422-f6b122b668a7",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Project",
+                    "name": "Merge",
                     "type": "Button",
                     "id": "4ebbc0fd-add8-4144-aa2e-23e0758752d8",
                     "expectedControlType": "Button",
@@ -42,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Refract",
+                    "name": "Shift",
                     "type": "Button",
                     "id": "7b6d2850-51b9-46fc-9ac6-ab8949ab09f0",
                     "expectedControlType": "Button",
@@ -54,6 +45,15 @@
                     "name": "Restart",
                     "type": "Button",
                     "id": "7c7f60a7-cde4-41b5-b8cf-3a39316da5d6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ShiftSelect",
+                    "type": "Button",
+                    "id": "7d17f28f-8381-4cee-99fe-fd44f06fdae3",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -228,67 +228,12 @@
                 },
                 {
                     "name": "",
-                    "id": "143bb1cd-cc10-4eca-a2f0-a3664166fe91",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Select",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "05f6913d-c316-48b2-a6bb-e225f14c7960",
+                    "id": "79c9083f-aacf-4ea1-a3f2-cbf5679e1cef",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Select",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "886e731e-7071-4ae4-95c0-e61739dad6fd",
-                    "path": "<Touchscreen>/primaryTouch/tap",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Touch",
-                    "action": "Select",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ee3d0cd2-254e-47a7-a8cb-bc94d9658c54",
-                    "path": "<Joystick>/trigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Joystick",
-                    "action": "Select",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8255d333-5683-4943-a58a-ccb207ff1dce",
-                    "path": "<XRController>/{PrimaryAction}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "XR",
-                    "action": "Select",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "79c9083f-aacf-4ea1-a3f2-cbf5679e1cef",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
                     "groups": "",
-                    "action": "Project",
+                    "action": "Merge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -299,7 +244,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Refract",
+                    "action": "Shift",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -311,6 +256,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Restart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e1e8a188-ead8-478f-96da-d071a61d01e9",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftSelect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

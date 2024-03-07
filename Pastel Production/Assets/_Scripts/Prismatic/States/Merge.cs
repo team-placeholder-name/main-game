@@ -5,37 +5,38 @@ using UnityEngine;
 namespace Prismatic
 {
     [System.Serializable]
-    public class Project : State
+    public class Merge : State
     {
         [SerializeField]
-        private Reticule reticule;
-        private float targetRange;
-        private float viewHeight = 2.0f;
-        private float viewDistance = 3.0f;
-        private float xAngle, yAngle;
-        private float yAngleLimit;
+        private float duration = 0.5f;
+        [SerializeField]
+        private float MergeAngle = 15;
+
+        private float endTime;
+        
 
   
 
         public override void Update(SimulationData data)
         {
-            UpdateView(data);
+            if (endTime <Time.time) {
+                Transition(StateType.Move);
+            }
         }
 
         public override void OnMoveInput(Vector2 movementInput)
         {
-            
         }
 
         public override void Enter(Action<StateType> transition, SimulationData data)
         {
-            yAngleLimit = SimulationData.maxYAngle;
-            xAngle = data.XYAngles.x;
-            yAngle = data.XYAngles.y;
-            reticule.gameObject.SetActive(true);
             base.Enter(transition, data);
+            MergeToTarget(data);
+            endTime = Time.time+duration;
         }
-        public override void OnSelect(SimulationData data)
+
+
+        private void MergeToTarget(SimulationData data)
         {
             Vector3 viewDirection = data.ViewTarget - data.ViewPosition;
 
@@ -44,27 +45,27 @@ namespace Prismatic
 
 
             //loop through all entities and find the one with the smallest angle to the player's view
-            for(int i = 0; i<data.entities.Count; i++ )
+            for (int i = 0; i < data.entities.Count; i++)
             {
                 if (data.entities[i] == data.currentEntity) continue;
 
                 PrismaticEntity entityToCheck = data.entities[i];
 
                 //First check for obstructions
-                Vector3 entityOffset = entityToCheck.Position -data.currentEntity.Position;
-                if (Physics.Raycast(data.currentEntity.Position+Vector3.up*0.5f, entityOffset, entityOffset.magnitude, 
-                    (1 << LayerMask.NameToLayer("Default"))+ 
+                Vector3 entityOffset = entityToCheck.Position - data.currentEntity.Position;
+                if (Physics.Raycast(data.currentEntity.Position + Vector3.up * 0.5f, entityOffset, entityOffset.magnitude,
+                    (1 << LayerMask.NameToLayer("Default")) +
                     (1 << LayerMask.NameToLayer("HueBarrier"))))
                 {
                     Debug.Log("Entity Blocked");
                     continue;
-                }                                                                                              
+                }
 
 
                 //Second, check if it's the closest to the players view
                 Vector3 entityDirection = entityToCheck.Position - data.ViewPosition;
                 float angle = Vector3.Angle(viewDirection, entityDirection);
-                if (angle < smallestAngle)
+                if (angle < smallestAngle && angle < MergeAngle)
                 {
                     smallestAngle = angle;
                     targetEntity = data.entities[i];
@@ -74,44 +75,37 @@ namespace Prismatic
 
 
             //project
-            if ( targetEntity!= null)
+            if (targetEntity != null)
             {
                 targetEntity.HueMix.AddColor(data.currentEntity.HueMix);
                 data.entities.Remove(data.currentEntity);
                 data.currentEntity = targetEntity;
                 Debug.Log("Selected entity: " + data.currentEntity);
-                Transition(StateType.Move);
+
             }
         }
 
         public override void OnMouseMove(Vector2 mouseDelta)
         {
-            xAngle = CameraUtility.AdjustAngle(mouseDelta.x, xAngle, 0);
-            yAngle = CameraUtility.AdjustAngle(mouseDelta.y, yAngle, yAngleLimit);
         }
 
-
-        private void UpdateView(SimulationData data)
+        public override void OnMerge(SimulationData simulationData)
         {
-            data.ViewPosition = CameraUtility.CalculateLookAtDirection(data, viewDistance, viewHeight);
-            data.ViewTarget = CameraUtility.CalculateEyeLevel(data, viewHeight);
-            data.XYAngles = new Vector2(xAngle, yAngle);
-        }
-
-        public override void OnProject(SimulationData simulationData)
-        {
-            Transition(StateType.Move);
         }
 
         public override void Exit(SimulationData data)
         {
-            reticule.gameObject.SetActive(false);
             base.Exit(data);
         }
 
-        public override void OnRefract(SimulationData simulationData)
+        public override void OnShift(SimulationData simulationData)
         {
-            throw new NotImplementedException();
+            
+        }
+
+        public override void OnShiftSelect(Vector2 mousePos, SimulationData simulationData)
+        {
+          
         }
     }
 }
