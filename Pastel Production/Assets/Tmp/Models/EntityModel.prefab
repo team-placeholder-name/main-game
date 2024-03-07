@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2014371607968249249}
   - component: {fileID: 5929780221288100398}
   - component: {fileID: 2174601642945407925}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sphere (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 3702145824439415163}
   - component: {fileID: 1323600773595417485}
   - component: {fileID: 4039949793727272318}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 1549567738406940048}
   - component: {fileID: 9202923250224062113}
   - component: {fileID: 4938507185125422386}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 8967781516820267891}
   - component: {fileID: 3052500997581697543}
   - component: {fileID: 7376872723097965643}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,9 +346,9 @@ GameObject:
   - component: {fileID: 7650859830278500031}
   - component: {fileID: 8941361967287606075}
   - component: {fileID: 7246717914974292151}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: EntityModel
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
