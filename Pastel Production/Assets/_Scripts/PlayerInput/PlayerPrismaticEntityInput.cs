@@ -36,7 +36,9 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
     /// <param name="value"></param>
     private void OnLook(InputValue value)
     {
-        controlledSimulation.OnMouseMove(Vector2.Scale(value.Get<Vector2>(),mouseSensitivity));
+        Vector2 input = Vector2.Scale(value.Get<Vector2>(), mouseSensitivity);
+        input.y *= -1;
+        controlledSimulation.OnMouseMove(input); 
 
     }
 
