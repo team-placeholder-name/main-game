@@ -14,6 +14,7 @@ public class OnboardingTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Trigger");
         if (_ReadyToTrigger && other.gameObject.CompareTag("Player"))
         {
             manager.ShowNextMessage();
