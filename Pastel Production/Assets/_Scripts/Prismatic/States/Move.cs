@@ -14,7 +14,8 @@ namespace Prismatic
         [SerializeField]
         private float speed = 5.0f;
         private float viewHeight = 1.5f;
-        private float viewDistance = 3.0f;
+        private float maxViewDistance = 10f;
+        private float currentDistance = 0.0f;
         [SerializeField] // Here while we tune in the best-feeling value for this, then we can remove this from the inspector
         private float turnSpeedInRadians = 0.5f; 
         private float xAngle, yAngle;
@@ -137,7 +138,9 @@ namespace Prismatic
 
         private void UpdateView(SimulationData data)
         {
-            data.ViewPosition = CameraUtility.CalculateLookAtDirection(data, viewDistance, viewHeight);
+            currentDistance = CameraUtility.DetermineDistance(data, maxViewDistance);
+            data.FOV = CameraUtility.DetermineFOV(currentDistance / maxViewDistance);
+            data.ViewPosition = CameraUtility.CalculateLookAtDirection(data, currentDistance, viewHeight);
             data.ViewTarget = CameraUtility.CalculateEyeLevel(data, viewHeight);
             data.XYAngles = new Vector2(xAngle, yAngle);
         }

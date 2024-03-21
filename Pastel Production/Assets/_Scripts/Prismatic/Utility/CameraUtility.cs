@@ -1,4 +1,5 @@
 using Prismatic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 public static class CameraUtility 
 {
@@ -36,5 +37,16 @@ public static class CameraUtility
         viewForward = viewForward.normalized;
         Vector3 moveForward = Vector3.ProjectOnPlane(viewForward, movementNormal).normalized;
         return Quaternion.LookRotation(moveForward, Vector3.up);
+    }
+
+    public static float DetermineDistance(SimulationData data, float distance)
+    {
+        return Mathf.Clamp(Mathf.Sin(Mathf.Deg2Rad * data.XYAngles.y) * distance, 2.5f, distance);
+    }
+
+    public static float DetermineFOV(float distanceProportion)
+    {
+        float inverse = 1.0f - distanceProportion;
+        return 60 + (90 - 60) * inverse;
     }
 }

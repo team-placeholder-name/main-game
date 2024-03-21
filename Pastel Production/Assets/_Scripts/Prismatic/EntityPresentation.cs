@@ -44,6 +44,7 @@ namespace Prismatic
         //Placeholder camera follow script
         private void SimpleCameraUpdate()
         {
+            Camera.main.fieldOfView = simulationTarget.SimulationData.FOV;
             Camera.main.transform.position = simulationTarget.SimulationData.ViewPosition;
             Camera.main.transform.rotation = Quaternion.LookRotation(simulationTarget.SimulationData.ViewTarget - simulationTarget.SimulationData.ViewPosition, Vector3.up);
         }
