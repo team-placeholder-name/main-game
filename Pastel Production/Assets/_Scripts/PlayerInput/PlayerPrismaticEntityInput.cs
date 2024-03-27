@@ -15,10 +15,17 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
     private PrismaticEntitySimulation controlledSimulation;
     [SerializeField]
     Vector2 mouseSensitivity = new Vector2(0.3f, 0.1f);
+
+    [SerializeField]
+    private GameSaveManager gsm;
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;   
         Cursor.visible = false; 
+        if (gsm != null)
+        {
+            gsm.SetDataSource(controlledSimulation);
+        }
     }
 
     /// <summary>
@@ -68,7 +75,14 @@ public class PlayerPrismaticEntityInput : MonoBehaviour
 
     private void OnRestart(InputValue value)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (gsm != null)
+        {
+            gsm.LoadCheckpoint();
+        } else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        
     }
 
 }
