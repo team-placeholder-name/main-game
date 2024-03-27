@@ -40,12 +40,13 @@ public static class CameraUtility
 
     public static float DetermineDistance(SimulationData data, float distance)
     {
-        return Mathf.Clamp(Mathf.Sin(Mathf.Deg2Rad * data.XYAngles.y) * distance, 2.5f, distance);
+        float t = Mathf.Sin(Mathf.Deg2Rad * data.XYAngles.y);
+        return Mathf.Lerp(2.5f, distance, t);
     }
 
-    public static float DetermineFOV(float distanceProportion)
+    public static float DetermineFOV(float cameraAngle)
     {
-        float inverse = 1.0f - distanceProportion;
-        return 60 + (90 - 60) * inverse;
+        float inverse = 1.0f - Mathf.Sin(Mathf.Deg2Rad * cameraAngle);
+        return Mathf.Lerp(60, 90, inverse); ;
     }
 }

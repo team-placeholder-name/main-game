@@ -130,8 +130,6 @@ namespace Prismatic
         public Vector3 ViewTarget;
         [HideInInspector]
         public Vector2 XYAngles;
-        [HideInInspector]
-        public float FOV = 60;
 
         [HideInInspector]
         public Vector2 MousePos;
@@ -164,7 +162,6 @@ namespace Prismatic
         public Vector3 ViewPosition { get => data.ViewPosition; }
         public Vector3 ViewTarget { get => data.ViewTarget; }  
         public Vector3 XYAngles { get => data.XYAngles; }
-        public float FOV { get => data.FOV; }
         public Vector2 MousePos { get => data.MousePos; }
 
 

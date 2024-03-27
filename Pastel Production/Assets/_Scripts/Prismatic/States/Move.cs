@@ -139,7 +139,6 @@ namespace Prismatic
         private void UpdateView(SimulationData data)
         {
             currentDistance = CameraUtility.DetermineDistance(data, maxViewDistance);
-            data.FOV = CameraUtility.DetermineFOV(currentDistance / maxViewDistance);
             data.ViewPosition = CameraUtility.CalculateLookAtDirection(data, currentDistance, viewHeight);
             data.ViewTarget = CameraUtility.CalculateEyeLevel(data, viewHeight);
             data.XYAngles = new Vector2(xAngle, yAngle);
