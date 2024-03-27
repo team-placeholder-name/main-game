@@ -130,6 +130,7 @@ namespace Prismatic
         public Vector3 ViewTarget;
         [HideInInspector]
         public Vector2 XYAngles;
+
         [HideInInspector]
         public Vector2 MousePos;
         // Max Vertical Rotation - currently this is hardcoded but it should be configurable via editor until we find something comfortable

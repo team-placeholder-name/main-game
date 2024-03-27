@@ -37,4 +37,16 @@ public static class CameraUtility
         Vector3 moveForward = Vector3.ProjectOnPlane(viewForward, movementNormal).normalized;
         return Quaternion.LookRotation(moveForward, Vector3.up);
     }
+
+    public static float DetermineDistance(SimulationData data, float distance)
+    {
+        float t = Mathf.Sin(Mathf.Deg2Rad * data.XYAngles.y);
+        return Mathf.Lerp(2.5f, distance, t);
+    }
+
+    public static float DetermineFOV(float cameraAngle)
+    {
+        float inverse = 1.0f - Mathf.Sin(Mathf.Deg2Rad * cameraAngle);
+        return Mathf.Lerp(60, 90, inverse); ;
+    }
 }
