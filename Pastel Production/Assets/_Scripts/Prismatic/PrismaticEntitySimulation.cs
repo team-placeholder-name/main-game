@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using TMPro;
 using UnityEngine;
 
 namespace Prismatic
@@ -94,6 +95,11 @@ namespace Prismatic
             GetState(currentStateType).OnShiftSelect(pos, simulationData);
         }
 
+        public void ReplaceData(SimulationData dataObject)
+        {
+            simulationData = dataObject;
+        }
+
     }
 
 
@@ -120,8 +126,6 @@ namespace Prismatic
         public Action EnterMerge;
         public Action ExitShift;
 
-
-
         // Where the player view originates from
         [HideInInspector]
         public Vector3 ViewPosition;
@@ -137,6 +141,24 @@ namespace Prismatic
         public const float maxYAngle =45;
         public const float minYAngle = -30;
 
+        public SimulationData Clone()
+        {
+            SimulationData underlyingDataClone = new SimulationData();
+            underlyingDataClone.entities = new List<PrismaticEntity>();
+            int indexOf = entities.IndexOf(currentEntity);
+            foreach (PrismaticEntity entity in entities)
+            {
+                HueMix hueClone = entity.HueMix.Clone();
+                underlyingDataClone.entities.Add(new PrismaticEntity(entity.Position, entity.Rotation, hueClone));
+            }
+            underlyingDataClone.currentEntity = underlyingDataClone.entities[indexOf];
+            underlyingDataClone.ViewPosition = ViewPosition;
+            underlyingDataClone.ViewTarget = ViewTarget;
+            underlyingDataClone.XYAngles = XYAngles;
+            underlyingDataClone.MousePos = MousePos;
+
+            return underlyingDataClone;
+        }
     }
 
     //If any shared state data needs to be read outside of the state, expose it here
@@ -164,6 +186,10 @@ namespace Prismatic
         public Vector3 XYAngles { get => data.XYAngles; }
         public Vector2 MousePos { get => data.MousePos; }
 
+        public SimulationData Clone()
+        {
+            return data.Clone();
+        }
 
     }
 
