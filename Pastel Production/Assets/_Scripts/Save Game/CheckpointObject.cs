@@ -11,7 +11,6 @@ public class CheckpointObject : MonoBehaviour
 
         if (_ReadyToTrigger && other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Saving");
             manager.Save();
             _ReadyToTrigger = false;
         }

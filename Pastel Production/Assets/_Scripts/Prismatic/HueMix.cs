@@ -29,6 +29,16 @@ namespace Prismatic
             Mix();
         }
 
+        public HueMix Clone()
+        {
+            List<ColorWeight> clonedColors = new List<ColorWeight>();
+            foreach(ColorWeight cw in colorWeights)
+            {
+                clonedColors.Add(cw.Clone());
+            }
+            return new HueMix(clonedColors);
+        }
+
         // Equality overrides
         public override bool Equals(object other) => this.Equals(other as HueMix);
         public bool Equals(HueMix other)
@@ -174,6 +184,11 @@ namespace Prismatic
         {
             this.color = color;
             this.weight = weight;
+        }
+
+        public ColorWeight Clone()
+        {
+            return new ColorWeight(color, weight);
         }
     
 

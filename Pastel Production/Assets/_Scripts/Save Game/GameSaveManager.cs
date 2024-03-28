@@ -6,10 +6,13 @@ public class GameSaveManager : MonoBehaviour
     private PrismaticEntitySimulation dataSource;
 
     private SimulationData dataClone;
+    [SerializeField]
+    private EntityPresentation presentationLayer;
 
 
     public void Save()
     {
+        presentationLayer.DisplayCheckpointMessage("Checkpoint reached!");
         dataClone = dataSource.SimulationData.Clone();
     }
 
@@ -17,7 +20,7 @@ public class GameSaveManager : MonoBehaviour
     {
         if (dataClone != null)
         {
-            Debug.Log(dataClone.entities[0].Position);
+            presentationLayer.DisplayCheckpointMessage("Loaded last checkpoint.");
             dataSource.ReplaceData(dataClone.Clone());
         }
     }

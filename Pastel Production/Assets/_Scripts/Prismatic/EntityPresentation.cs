@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 namespace Prismatic
 {
@@ -18,6 +19,9 @@ namespace Prismatic
         public ShiftUIGen shiftUIGen;//move the logic from this to the simulation
 
         public List<GameObject> entityModels = new List<GameObject>();
+
+        [SerializeField]
+        private TextMeshProUGUI checkpointText;
 
 
         private void Start()
@@ -91,6 +95,29 @@ namespace Prismatic
                 entityModels[i].SetActive(false);
             }
             
+        }
+
+        public void DisplayCheckpointMessage(string text)
+        {
+            // Guard clause
+            if (checkpointText == null)
+            {
+                return;
+            }
+            checkpointText.gameObject.SetActive(true);
+            checkpointText.text = text;
+            StartCoroutine(CheckpointMessageTimer());
+        }
+
+        public void HideCheckpointMessage()
+        {
+            checkpointText.gameObject.SetActive(false);
+        }
+
+        IEnumerator CheckpointMessageTimer()
+        {
+            yield return new WaitForSeconds(5f);
+            HideCheckpointMessage();
         }
     }
 }
