@@ -55,6 +55,7 @@ MonoBehaviour:
     canvasPrefab: {fileID: 7547140859471614006, guid: e32fce53df810a64fafc191f3e9cbc6d,
       type: 3}
   entityModels: []
+  checkpointText: {fileID: 0}
 --- !u!1 &3872342452550566804
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,6 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlledSimulation: {fileID: 739844758233423123}
   mouseSensitivity: {x: 0.3, y: 0.1}
+  gsm: {fileID: 6814476858697622162}
 --- !u!1 &5299604942455343589
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,6 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5705460594482970016}
   - component: {fileID: 739844758233423123}
+  - component: {fileID: 6814476858697622162}
   m_Layer: 0
   m_Name: Simulation
   m_TagString: Untagged
@@ -259,7 +262,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   simulationData:
     entities:
-    - Position: {x: 0, y: 0, z: 0}
+    - Velocity: 0
+      Position: {x: 0, y: 0, z: 0}
       Rotation: {x: 0, y: 0, z: 0, w: 0}
       HueMix:
         colorWeights:
@@ -270,13 +274,16 @@ MonoBehaviour:
         - color: {r: 0, g: 1, b: 1, a: 1}
           weight: 1
     currentEntity:
+      Velocity: 0
       Position: {x: 0, y: 0, z: 0}
       Rotation: {x: 0, y: 0, z: 0, w: 0}
       HueMix:
         colorWeights: []
+    Morph: 0
     ViewPosition: {x: 0, y: 0, z: 0}
     ViewTarget: {x: 0, y: 0, z: 0}
     XYAngles: {x: 0, y: 0}
+    MousePos: {x: 0, y: 0}
   move:
     speed: 5
     turnSpeedInRadians: 0.5
@@ -284,4 +291,18 @@ MonoBehaviour:
     _entityPresentation: {fileID: 2443306143264257040}
   merge:
     duration: 0.5
+    MergeAngle: 15
   currentStateType: 0
+--- !u!114 &6814476858697622162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8810384400035996660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf90fb6f8e8c5c4f859e09a6f46842f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  presentationLayer: {fileID: 2443306143264257040}

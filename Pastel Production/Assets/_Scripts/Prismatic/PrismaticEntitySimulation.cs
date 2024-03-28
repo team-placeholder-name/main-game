@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using TMPro;
 using UnityEngine;
 
 namespace Prismatic
@@ -144,11 +145,13 @@ namespace Prismatic
         {
             SimulationData underlyingDataClone = new SimulationData();
             underlyingDataClone.entities = new List<PrismaticEntity>();
+            int indexOf = entities.IndexOf(currentEntity);
             foreach (PrismaticEntity entity in entities)
             {
-                underlyingDataClone.entities.Add(new PrismaticEntity(entity.Position, entity.Rotation, entity.HueMix));
+                HueMix hueClone = entity.HueMix.Clone();
+                underlyingDataClone.entities.Add(new PrismaticEntity(entity.Position, entity.Rotation, hueClone));
             }
-            underlyingDataClone.currentEntity = currentEntity;
+            underlyingDataClone.currentEntity = underlyingDataClone.entities[indexOf];
             underlyingDataClone.ViewPosition = ViewPosition;
             underlyingDataClone.ViewTarget = ViewTarget;
             underlyingDataClone.XYAngles = XYAngles;
